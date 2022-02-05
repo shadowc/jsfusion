@@ -28,6 +28,16 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 
 eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"Runtime\": () => (/* binding */ Runtime)\n/* harmony export */ });\n/* harmony import */ var _observables__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./observables */ \"./assets/observables.ts\");\n/**\n * Main JsFusion framework runtime file. This is to be executed in every page load\n * and will start observing changes to the DOM in order to instantiate components.\n */\n\nvar Runtime = /** @class */ (function () {\n    function Runtime() {\n        this.componentRegistry = [];\n        this.observer = new MutationObserver(this.mutationObserverHandler.bind(this));\n        this.observableAttributes = new _observables__WEBPACK_IMPORTED_MODULE_0__.ObservableAttributes();\n        // Register the conventional attribute handlers\n        this.observableAttributes.registerAttributeHandler('data-component', this.instantiateController.bind(this));\n    }\n    Runtime.prototype.mutationObserverHandler = function (mutationList) {\n        mutationList.forEach(function (mutation) {\n            console.log(mutation);\n        });\n    };\n    Runtime.prototype.start = function () {\n        var _this = this;\n        // Find all registered attributes and process their handlers already present in the page\n        Object.keys(this.observableAttributes.observableAttributes).forEach(function (attributeName) {\n            console.log(attributeName);\n            var components = document.body.querySelectorAll('*[' + attributeName + ']');\n            console.log(components);\n            components.forEach(function (componentElement) {\n                _this.observableAttributes.observableAttributes[attributeName](attributeName, componentElement);\n            });\n        });\n        // Now start observing for DOM changes\n        this.observer.observe(document.body, {\n            attributes: true,\n            attributeFilter: this.observableAttributes.observableAttributesList,\n            attributeOldValue: true,\n            childList: true,\n            subtree: true,\n        });\n    };\n    // Observable Handlers\n    Runtime.prototype.instantiateController = function (attribute, element) {\n        console.log('Attempting instantiate a component for ' + attribute, element);\n    };\n    return Runtime;\n}());\n\n\n\n//# sourceURL=webpack://jsfusion/./assets/runtime.ts?");
 
+/***/ }),
+
+/***/ "./assets/test-components/app.ts":
+/*!***************************************!*\
+  !*** ./assets/test-components/app.ts ***!
+  \***************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../runtime */ \"./assets/runtime.ts\");\n\nvar JsFusion = new _runtime__WEBPACK_IMPORTED_MODULE_0__.Runtime();\nJsFusion.start();\n\n\n//# sourceURL=webpack://jsfusion/./assets/test-components/app.ts?");
+
 /***/ })
 
 /******/ 	});
@@ -90,7 +100,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module can't be inlined because the eval devtool is used.
-/******/ 	var __webpack_exports__ = __webpack_require__("./assets/runtime.ts");
+/******/ 	var __webpack_exports__ = __webpack_require__("./assets/test-components/app.ts");
 /******/ 	
 /******/ })()
 ;

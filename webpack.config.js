@@ -6,7 +6,8 @@ module.exports = {
         ignored: '**/node_modules',
     },
     entry: {
-        "runtime": path.resolve("./assets/runtime")
+        'runtime': path.resolve('./assets/runtime'),
+        'app': path.resolve('./assets/test-components/app')
     },
     module: {
         rules: [
