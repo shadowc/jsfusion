@@ -1,2 +1,3 @@
-# webfusion
+# JsFusion
+
 JavaScript Framework

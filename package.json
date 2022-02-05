@@ -1,0 +1,7 @@
+{
+    "name": "jsfusion",
+    "version": "0.1-alpha",
+    "scripts": {
+        "webpack-dev": ""
+    }
+}
