@@ -4,7 +4,7 @@ services:
   web:
     image: httpd:2.4
     ports:
-      - '8000:8000'
+      - '8000:80'
     working_dir: /usr/local/apache2/htdocs
     depends_on:
       - nodejs
@@ -14,7 +14,8 @@ services:
 
   nodejs:
     image: node:16
-    working_dir: /var/node
+    user: node
+    working_dir: /home/node/app
     volumes:
-      - ./:/var/node
+      - ./:/home/node/app
     command: bash -c "npm install && npm run webpack-dev"
