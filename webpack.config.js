@@ -18,6 +18,7 @@ module.exports = {
             }
         ]
     },
+    devtool: process.env.APP_ENV === 'production' ? false : 'eval',
     resolve: {
         extensions: ['.tsx', '.ts', '.js'],
     },

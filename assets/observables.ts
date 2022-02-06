@@ -1,10 +1,9 @@
-import { ObservableAttributeCallback, ObservableAttributeList } from './types/observables';
-import { JsFusion } from './types/jsfusion';
+import { IObservableAttributes, ObservableAttributeCallback, ObservableAttributeCollection } from './types/observables';
 
 /**
  * Class that administers the observable attributes by the framework
  */
-export class ObservableAttributes {
+export class ObservableAttributes implements IObservableAttributes {
     /**
      * Attribute list that can be observed by the framework offering different
      * functionality for parsing and processing
@@ -16,10 +15,18 @@ export class ObservableAttributes {
         'data-props',
     ];
 
-    observableAttributes: ObservableAttributeList = {};
+    attributes: ObservableAttributeCollection = {};
 
     registerAttributeHandler(attributeName: string, handler: ObservableAttributeCallback) {
+        if (this.observableAttributesList.indexOf(attributeName) === -1) {
+            throw `Initialization Error: Tried to register a callback for an undefined attribute: ${attributeName}`;
+        }
+
+        if (this.attributes[attributeName]) {
+            throw `Initialization Error: Callback for attribute ${attributeName} already registered.`;
+        }
+
         // Attach the different observable attributes to the attribute handlers
-        this.observableAttributes[attributeName] = handler;
+        this.attributes[attributeName] = handler;
     }
 }
