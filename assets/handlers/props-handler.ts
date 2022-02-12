@@ -1,14 +1,8 @@
 import { IAttributeHandler } from '../types/attribute-handler';
-import { IRuntime } from '../types/runtime';
+import { AbstractHandler } from './abstract-handler';
 
-export class PropsHandler implements IAttributeHandler {
-    parent: IRuntime;
-
-    constructor(parent: IRuntime) {
-        this.parent = parent;
-    }
-
-    handleAttribute(attribute: String, element: Element): void {
+export class PropsHandler extends AbstractHandler implements IAttributeHandler {
+    handleAttribute(attribute: string, element: Element): void {
         const attrValue = element.getAttribute(attribute);
         console.log(`Attempting to add props to a component for ${attribute}: ${attrValue}`, element);
     }

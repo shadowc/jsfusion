@@ -1,14 +1,8 @@
 import { IAttributeHandler } from '../types/attribute-handler';
-import { IRuntime } from '../types/runtime';
+import { AbstractHandler } from './abstract-handler';
 
-export class ComponentHandler implements IAttributeHandler {
-    parent: IRuntime;
-
-    constructor(parent: IRuntime) {
-        this.parent = parent;
-    }
-
-    handleAttribute(attribute: String, element: Element): void {
+export class ComponentHandler extends AbstractHandler implements IAttributeHandler {
+    handleAttribute(attribute: string, element: Element): void {
         const attrValue = element.getAttribute(attribute);
         const componentNames = this.parseDataComponentAttribute(attrValue);
 
@@ -17,8 +11,8 @@ export class ComponentHandler implements IAttributeHandler {
         });
     }
 
-    private parseDataComponentAttribute(text: string) {
-        let componentList = [];
+    private parseDataComponentAttribute(text: string): string[] {
+        let componentList: string[] = [];
 
         if (text.indexOf('[') !== -1) { // assume json array
             const parsedText: string[] = JSON.parse(text);
