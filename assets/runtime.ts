@@ -3,13 +3,16 @@
  * and will start observing changes to the DOM in order to instantiate components.
  */
 import { ObservableAttributes } from './observables';
-import { ComponentCollection, ComponentRegistry, IRuntime } from './types/jsfusion'
-import { DataComponentHelper } from './data-component-helper';
+import { ComponentCollection, ComponentRegistry, IRuntime } from './types/runtime';
 import { IComponentClass } from './types/component';
+import { ComponentHandler } from './handlers/component-handler';
+import { PropsHandler } from './handlers/props-handler';
+import { BindHandler } from './handlers/bind-handler';
+import { EventHandler } from './handlers/event-handler';
 
 export class Runtime implements IRuntime {
     version: string;
-    observer: MutationObserver;
+    mutationObserver: MutationObserver;
     observableAttributes: ObservableAttributes;
     componentRegistry: ComponentRegistry;
     components: ComponentCollection;
@@ -18,28 +21,28 @@ export class Runtime implements IRuntime {
         this.version = '0.1-alpha1';
         this.componentRegistry = [];
         this.components = {};
-        this.observer = new MutationObserver(this.mutationObserverHandler.bind(this));
+        this.mutationObserver = new MutationObserver(this.mutationObserverHandler.bind(this));
         this.observableAttributes = new ObservableAttributes();
 
         // Register the conventional attribute handlers
         this.observableAttributes.registerAttributeHandler(
             'data-component',
-            this.instantiateComponent.bind(this),
+            new ComponentHandler(this),
         );
 
         this.observableAttributes.registerAttributeHandler(
             'data-props',
-            this.addPropsToComponent.bind(this),
+            new PropsHandler(this),
         );
 
         this.observableAttributes.registerAttributeHandler(
             'data-bind',
-            this.bindPropToElement.bind(this),
+            new BindHandler(this),
         );
 
         this.observableAttributes.registerAttributeHandler(
             'data-on',
-            this.bindEventToElement.bind(this),
+            new EventHandler(this),
         )
     }
 
@@ -55,14 +58,14 @@ export class Runtime implements IRuntime {
             const components = document.body.querySelectorAll('*['+attributeName+']');
 
             components.forEach((componentElement) => {
-                this.observableAttributes.attributes[attributeName](attributeName, componentElement);
+                this.observableAttributes.attributes[attributeName].handleAttribute(attributeName, componentElement);
             });
         });
 
         // Now start observing for DOM changes
-        this.observer.observe(document.body, {
+        this.mutationObserver.observe(document.body, {
             attributes: true,
-            attributeFilter: this.observableAttributes.observableAttributesList,
+            attributeFilter: this.observableAttributes.observableAttributeList,
             attributeOldValue: true,
             childList: true,
             subtree: true,
@@ -96,30 +99,5 @@ export class Runtime implements IRuntime {
             component: new componentClass(element),
             node: element,
         });
-    }
-
-    // Observable Handlers
-    instantiateComponent(attribute: string, element: Element) {
-        const attrValue = element.getAttribute(attribute);
-        const componentNames = DataComponentHelper.parseDataComponentAttribute(attrValue);
-
-        componentNames.forEach((component) => {
-            this.registerComponentElement(component, element);
-        });
-    }
-
-    addPropsToComponent(attribute: string, element: Element) {
-        const attrValue = element.getAttribute(attribute);
-        console.log(`Attempting to add props to a component for ${attribute}: ${attrValue}`, element);
-    }
-
-    bindPropToElement(attribute: string, element: Element) {
-        const attrValue = element.getAttribute(attribute);
-        console.log(`Attempting to bind a value to an element for ${attribute}: ${attrValue}`, element);
-    }
-
-    bindEventToElement(attribute: string, element: Element) {
-        const attrValue = element.getAttribute(attribute);
-        console.log(`Attempting to bind an event to an element for ${attribute}: ${attrValue}`, element);
     }
 }

@@ -1,9 +1,10 @@
-export type ObservableAttributeCallback = (attribute: String, element: Element) => void;
-export type ObservableAttributeCollection = { [index: string]: ObservableAttributeCallback };
+import { IAttributeHandler } from './attribute-handler';
+
+export type ObservableAttributeCollection = { [index: string]: IAttributeHandler };
 
 export interface IObservableAttributes {
-    observableAttributesList: string[];
+    observableAttributeList: string[];
     attributes: ObservableAttributeCollection;
 
-    registerAttributeHandler: (attributeName: string, handler: ObservableAttributeCallback) => void;
+    registerAttributeHandler: (attributeName: string, handler: IAttributeHandler) => void;
 }

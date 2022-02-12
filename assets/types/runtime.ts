@@ -1,5 +1,4 @@
 import { ObservableAttributes } from '../observables';
-import { ObservableAttributeCallback } from './observables';
 import { IComponentClass, IComponent } from './component';
 
 export type ComponentRegistry = Array<{component: IComponent, node: Element }>;
@@ -7,7 +6,7 @@ export type ComponentCollection = {[index: string]: IComponentClass};
 
 export interface IRuntime {
     version: string;
-    observer: MutationObserver;
+    mutationObserver: MutationObserver;
     observableAttributes: ObservableAttributes;
     componentRegistry: ComponentRegistry;
     components: ComponentCollection;
@@ -17,10 +16,4 @@ export interface IRuntime {
     start: () => void;
     registerComponent: (componentName: string, component: IComponentClass) => void;
     registerComponentElement: (componentName: string, element: Element) => void;
-
-    // Handlers
-    instantiateComponent: ObservableAttributeCallback;
-    addPropsToComponent: ObservableAttributeCallback;
-    bindPropToElement: ObservableAttributeCallback;
-    bindEventToElement: ObservableAttributeCallback;
 }
