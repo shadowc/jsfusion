@@ -1,7 +1,7 @@
 import { ObservableAttributes } from '../observables';
 import { IComponentClass, IComponent } from './component';
 
-export type ComponentRegistry = Array<{component: IComponent, node: Element }>;
+export type ComponentRegistry = Array<{name: string, component: IComponent, node: Element }>;
 export type ComponentCollection = {[index: string]: IComponentClass};
 
 export interface IRuntime {

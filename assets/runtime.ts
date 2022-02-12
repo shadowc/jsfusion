@@ -90,12 +90,13 @@ export class Runtime implements IRuntime {
         const componentClass = this.components[componentName];
 
         this.componentRegistry.forEach((register) => {
-            if (register.node === element && register.component instanceof componentClass) {
+            if (register.node === element && register.name === componentName) {
                 throw `The component ${componentName} has been already instantiated for ${element}!`;
             }
         });
 
         this.componentRegistry.push({
+            name: componentName,
             component: new componentClass(element),
             node: element,
         });
