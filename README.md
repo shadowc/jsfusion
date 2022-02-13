@@ -247,7 +247,7 @@ side effects there.
 <div data-component="otherComponent" data-props="{ mainCount: 0 }">
     <label>Here is a counter:</label>
 
-    <span data-component="counter" data-props="{ count: { '#ref': 'otherComponent.count' } }"></span>
+    <span data-component="counter" data-props="{ count: { '#parentProp': 'mainCount' } }"></span>
 </div>
 ```
 
@@ -256,3 +256,6 @@ side effects there.
 > properties. So you should only be passing down props when you want its
 > side effects to be implemented instantly, for example when any of the
 > components change this prop.
+
+> If you pass an Object as a prop value, avoid using the key '#parentProp'
+> as it is bound to cause errors!
