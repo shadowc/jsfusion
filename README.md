@@ -293,7 +293,7 @@ The syntax for `data-bind` is as follows:
 #### HTML
 
 ```html
-<div data-bind="<strategy>:<controller>.<prop>"></div>
+<div data-bind="<strategy>:<component>.<prop>"></div>
 ```
 
 You can specify multiple bindings by separating them with spaces or
@@ -335,7 +335,7 @@ bound to the `this.props.count` property in the `coutner` component.
 
 ### New bind strategies
 
-New types if bind can be easily implemented and even extended by using
+New types of bind can be easily implemented and even extended by using
 a plugin type system.
 
 ### `data-ref` for references to inner elements
@@ -350,7 +350,7 @@ The syntax is as follows:
 #### HTML
 
 ```html
-<div data-ref="<controller>:<refName>"></div>
+<div data-ref="<component>:<refName>"></div>
 ```
 
 You can specify multiple refs (if several components have access to this
@@ -399,7 +399,7 @@ The syntax is as follows:
 #### HTML
 
 ```html
-<div data-on="<event>:<controller>.<handler>"></div>
+<div data-on="<event>:<component>.<handler>"></div>
 ```
 
 You can specify multiple event handlers to one element, again by separating
