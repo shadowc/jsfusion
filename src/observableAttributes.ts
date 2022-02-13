@@ -1,4 +1,4 @@
-import { IObservableAttributes, ObservableAttributeCollection } from './types/observables';
+import { IObservableAttributes, ObservableAttributeCollection } from './types/observableAttributes';
 import { IAttributeHandler } from './types/attribute-handler';
 
 /**

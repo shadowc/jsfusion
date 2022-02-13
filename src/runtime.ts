@@ -9,6 +9,7 @@ import { ComponentHandler } from './handlers/component-handler';
 import { PropsHandler } from './handlers/props-handler';
 import { BindHandler } from './handlers/bind-handler';
 import { EventHandler } from './handlers/event-handler';
+import { Logger } from './logger';
 
 export { Component } from './component';
 
@@ -52,7 +53,7 @@ export class Runtime implements IRuntime {
         mutationList.forEach((mutation) => {
             // TODO: Device a way to DIFF attribute add/delete/modify and use
             //  handlers accordingly on mutations
-            console.log(mutation);
+            Logger.log(mutation);
         });
     }
 
@@ -62,7 +63,7 @@ export class Runtime implements IRuntime {
         const attributeList = Object.keys(this.observableAttributes.attributes);
 
         // Find all registered attributes and process their handlers already present in the page
-        Object.keys(attributeList).forEach((attributeName) => {
+        attributeList.forEach((attributeName) => {
             const components = document.body.querySelectorAll('*['+attributeName+']');
 
             components.forEach((componentElement) => {
@@ -83,7 +84,7 @@ export class Runtime implements IRuntime {
     }
 
     registerComponent(componentName: string, component: IComponentClass) {
-        console.log(`Registering app component "${componentName}".`);
+        Logger.log(`Registering component "${componentName}" for general use.`);
 
         if (typeof this.components[componentName] === 'undefined') {
             this.components[componentName] = component;
@@ -91,17 +92,17 @@ export class Runtime implements IRuntime {
     }
 
     registerComponentElement(componentName: string, element: Element) {
-        console.log(`Registering component ${componentName} on`, element);
+        Logger.log(`Registering component "${componentName}" on`, element);
 
         if (typeof this.components[componentName] === 'undefined') {
-            throw `The component ${componentName} is not registered in JsFusion. Did you forget to run Runtime.registerComponent('${componentName}', MyComponentClass)?`;
+            throw `The component "${componentName}" is not registered in JsFusion. Did you forget to run Runtime.registerComponent('${componentName}', MyComponentClass)?`;
         }
 
         const componentClass = this.components[componentName];
 
         this.componentRegistry.forEach((register) => {
             if (register.node === element && register.name === componentName) {
-                throw `The component ${componentName} has been already instantiated for ${element}!`;
+                throw `The component "${componentName}" has been already instantiated for ${element}!`;
             }
         });
 

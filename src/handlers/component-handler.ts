@@ -1,10 +1,14 @@
 import { IAttributeHandler } from '../types/attribute-handler';
+import { Logger } from '../logger';
 import { AbstractHandler } from './abstract-handler';
 
 export class ComponentHandler extends AbstractHandler implements IAttributeHandler {
     handleAttribute(attribute: string, element: Element): void {
         const attrValue = element.getAttribute(attribute);
+        Logger.log(`Parsing attribute data-component for value "${attrValue}"`);
+
         const componentNames = this.parseDataComponentAttribute(attrValue);
+        Logger.log('Components:', componentNames);
 
         componentNames.forEach((component) => {
             this.parent.registerComponentElement(component, element);
