@@ -9,8 +9,7 @@ services:
     depends_on:
       - nodejs
     volumes:
-      - ./html:/usr/local/apache2/htdocs
-      - ./dist:/usr/local/apache2/htdocs/js
+      - ./test/html:/usr/local/apache2/htdocs
 
   nodejs:
     image: node:16

@@ -438,6 +438,10 @@ export default class extends Component {
 }
 ```
 
+### LifeCycle functions
+
+TBD.
+
 ### Future development
 
 New ideas and concepts will evolve and be implemented as the framework

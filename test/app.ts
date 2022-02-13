@@ -1,5 +1,5 @@
-import { Runtime } from '../runtime';
-import Counter from './counter';
+import { Runtime } from '../src/runtime';
+import Counter from './test-components/counter';
 
 const JsFusion = new Runtime();
 JsFusion.registerComponent('counter', Counter);

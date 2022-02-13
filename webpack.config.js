@@ -6,8 +6,12 @@ module.exports = {
         ignored: '**/node_modules',
     },
     entry: {
-        'runtime': path.resolve('./assets/runtime'),
-        'app': path.resolve('./assets/test-components/app')
+        'dist/runtime': path.resolve('./src/runtime'),
+        'test/html/js/app': path.resolve('./test/app')
+    },
+    output: {
+        path: path.resolve('.'),
+        filename: '[name].js'
     },
     module: {
         rules: [

@@ -10,6 +10,8 @@ import { PropsHandler } from './handlers/props-handler';
 import { BindHandler } from './handlers/bind-handler';
 import { EventHandler } from './handlers/event-handler';
 
+export { Component } from './component';
+
 export class Runtime implements IRuntime {
     version: string;
     mutationObserver: MutationObserver;
