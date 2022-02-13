@@ -20,6 +20,20 @@ to experiment with it and suggest features, fixes and improvements.
 
 This section will be updated as development progresses.
 
+## Extensibility
+
+This framework is thought with extensibility in mind. You will be able to
+easily extend the functionality of this framework by applying changes to
+`Runtime` before the call to `start()`. 
+
+Some aspects that can be extended are:
+
+- Attribute Handling: You will be able to extend the number of `data-`
+prefixed attributes so that when they are added or change, your parsing
+method will be called
+- `data-bind` special cases: You will be able to extend the `data-bind`
+attribute parsing so that new binding mechanisms can be established.
+
 ## Usage
 
 ### Installation and Setup
@@ -266,3 +280,165 @@ a templating engine:
 ```twig
 <div data-component="otherComponent" data-props="{{ myPropsObject|json|e('html_attr') }}">
 ```
+
+### Bind props to HTMLElements
+
+After you have defined and initialized a prop, you can bind it to different
+elements of the DOM by using the special `data-bind` attribute. After
+parsing this attribute, whenever any of the props mentioned change, its
+effects will be rendered immediately.
+
+The syntax for `data-bind` is as follows:
+
+#### HTML
+
+```html
+<div data-bind="<strategy>:<controller>.<prop>"></div>
+```
+
+You can specify multiple bindings by separating them with spaces or
+providing them in a json array of strings notation, but notice that
+as of right now, with only one binding strategy, they will conflict with
+each other.
+
+#### HTML
+
+```html
+<div data-bind="text:counter.count text:otherComponent.myProp"></div>
+```
+
+#### HTML
+
+```html
+<div data-bind="[ 
+    'text:counter.count', 
+    'text:otherComponent.myProp' 
+]"></div>
+```
+
+
+### `data-bind` `text`
+
+The most simple bind strategy is "text", where the `innerText` property
+of the HTML Element will be synced with the value of the property referred.
+
+#### HTML
+
+```html
+<div data-component="counter" data-props="{ count: 0 }">
+    <span data-bind="text:counter.count"></span>
+</div>
+```
+
+In this example, the `<span>` element will have its `innerText` property
+bound to the `this.props.count` property in the `coutner` component.
+
+### New bind strategies
+
+New types if bind can be easily implemented and even extended by using
+a plugin type system.
+
+### `data-ref` for references to inner elements
+
+References to elements inside the component DOM structure can be saved by
+using the `data-ref` attribute. Simply provide the name of the ref getter
+that will be accessible from the Component, similar to the `data-target`
+strategy in Stimulus.
+
+The syntax is as follows:
+
+#### HTML
+
+```html
+<div data-ref="<controller>:<refName>"></div>
+```
+
+You can specify multiple refs (if several components have access to this
+element, for example when this element lies within a parent and its child
+component) by separating them with spaces or providing them in the form
+of an array of strings in json notation:
+
+#### HTML
+
+```html
+<div data-ref="counter:refName otherComponent:otherRef"></div>
+```
+
+#### HTML
+
+```html
+<div data-ref="[
+    'counter:refName',
+    'otherComponent:otherRef'
+]"></div>
+```
+
+Once defined, these refs can be referenced from the Component class:
+
+#### JavaScript
+
+```javascript
+export default class extends Component {
+    myFunction() {
+        this.refs.refName.innerHTML = this.props.count;
+    }
+}
+```
+
+You can have multiple elements with the same ref name, and they will be
+exposed through an `Array` instead of just the HTMLElement.
+
+### `data-on` for event handling
+
+Events can be dynamically assigned by the special attribute `data-on`, 
+specifying the browser event name (without the `on` part) and the
+function that handles it.
+
+The syntax is as follows: 
+
+#### HTML
+
+```html
+<div data-on="<event>:<controller>.<handler>"></div>
+```
+
+You can specify multiple event handlers to one element, again by separating
+them with spaces or providing the proper json array of strings.
+
+#### HTML
+
+```html
+<div data-on="click:counter.handleClick mouseup:otherComponent.handleMouseUp"></div>
+```
+
+#### HTML
+
+```html
+<div data-on="[
+    'click:counter.handleClick',
+    'mouseup:otherComponent.handleMouseUp'
+]"></div>
+```
+
+Once parsed, these callbacks will be called when the event occurs.
+
+#### JavaScript
+
+```javascript
+export default class extends Component {
+    /**
+     * @param {MouseEvent} event
+     * @returns {boolean}
+     */
+    handleClick(event) {
+        event.preventDefault();
+        
+        return false;
+    }
+}
+```
+
+### Future development
+
+New ideas and concepts will evolve and be implemented as the framework
+matures.
