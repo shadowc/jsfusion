@@ -2,7 +2,7 @@
  * Main JsFusion framework runtime file. This is to be executed in every page load
  * and will start observing changes to the DOM in order to instantiate components.
  */
-import { ObservableAttributes } from './observables';
+import { ObservableAttributes } from './observableAttributes';
 import { ComponentCollection, ComponentRegistry, IRuntime } from './types/runtime';
 import { IComponentClass } from './types/component';
 import { ComponentHandler } from './handlers/component-handler';
@@ -50,13 +50,19 @@ export class Runtime implements IRuntime {
 
     mutationObserverHandler(mutationList: MutationRecord[]) {
         mutationList.forEach((mutation) => {
+            // TODO: Device a way to DIFF attribute add/delete/modify and use
+            //  handlers accordingly on mutations
             console.log(mutation);
         });
     }
 
     start() {
+        // As a start, scan all attribute handlers for attributes in the entire DOM
+        // and assume all attributes have been recently added
+        const attributeList = Object.keys(this.observableAttributes.attributes);
+
         // Find all registered attributes and process their handlers already present in the page
-        Object.keys(this.observableAttributes.attributes).forEach((attributeName) => {
+        Object.keys(attributeList).forEach((attributeName) => {
             const components = document.body.querySelectorAll('*['+attributeName+']');
 
             components.forEach((componentElement) => {
@@ -64,10 +70,12 @@ export class Runtime implements IRuntime {
             });
         });
 
+        // TODO: This is the place for adding plugins that register new handlers
+
         // Now start observing for DOM changes
         this.mutationObserver.observe(document.body, {
             attributes: true,
-            attributeFilter: this.observableAttributes.observableAttributeList,
+            attributeFilter: attributeList,
             attributeOldValue: true,
             childList: true,
             subtree: true,
