@@ -203,10 +203,7 @@ Component is instantiated, you can access your Props through the
 
 ```javascript
 export default class Counter extends Component {
-    .
-    .
-    .
-    
+    // Define propsTypes in setPropTypes() first!
     myFunction() {
         this.props.count = 2; // this will have side-effects
         console.log(this.props.count);
@@ -259,3 +256,13 @@ side effects there.
 
 > If you pass an Object as a prop value, avoid using the key '#parentProp'
 > as it is bound to cause errors!
+
+Finally, since props are passed using Json notation, you can easily
+pass objects created by a PHP function, for example, when using `Twig` as
+a templating engine:
+
+#### Twig
+
+```twig
+<div data-component="otherComponent" data-props="{{ myPropsObject|json|e('html_attr') }}">
+```
