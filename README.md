@@ -67,7 +67,7 @@ JsFusion.registerComponent('counter', Counter);
 JsFusion.start();
 ```
 
-That is all you need! Now Jsfusion will look through your DOM structure and
+That is all you need! Now JsFusion will look through your DOM structure and
 observe changes to it (much like Stimulus) to instantiate and manage the
 different Components on your page.
 
@@ -132,7 +132,7 @@ separating them with spaces:
 <div data-component="['counter', 'otherComponent']"></div>
 ```
 
-Finally, you can have children components inside your Component structure
+Finally, you can have children components inside your Component structure,
 and they will be accessible through the `this.children` collection.
 
 #### HTML
@@ -338,7 +338,7 @@ bound to the `this.props.count` property in the `coutner` component.
 New types of bind can be easily implemented and even extended by using
 a plugin type system.
 
-### `data-ref` for references to inner elements
+### Reference specific DOM Elements
 
 References to elements inside the component DOM structure can be saved by
 using the `data-ref` attribute. Simply provide the name of the ref getter
@@ -388,7 +388,7 @@ export default class extends Component {
 You can have multiple elements with the same ref name, and they will be
 exposed through an `Array` instead of just the HTMLElement.
 
-### `data-on` for event handling
+### Event handling
 
 Events can be dynamically assigned by the special attribute `data-on`, 
 specifying the browser event name (without the `on` part) and the
