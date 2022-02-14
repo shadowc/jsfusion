@@ -9,6 +9,7 @@ import { ComponentHandler } from './handlers/component-handler';
 import { PropsHandler } from './handlers/props-handler';
 import { BindHandler } from './handlers/bind-handler';
 import { EventHandler } from './handlers/event-handler';
+import { RefHandler } from './handlers/ref-handler';
 import { Logger } from './logger';
 
 export { Component } from './component';
@@ -46,6 +47,11 @@ export class Runtime implements IRuntime {
         this.observableAttributes.registerAttributeHandler(
             'data-on',
             new EventHandler(this),
+        )
+
+        this.observableAttributes.registerAttributeHandler(
+            'data-ref',
+            new RefHandler(this),
         )
     }
 
