@@ -1,4 +1,4 @@
-import { ILogger } from './types/logger';
+import { NullLogger } from './null-logger';
 
 declare var APP_ENV: string;
 
@@ -6,12 +6,6 @@ if (APP_ENV !== 'production') {
     console.warn(`You are running JsFusion in ${APP_ENV} mode.`)
 }
 
-let LoggerImpl: ILogger|Console;
-if (APP_ENV !== 'production') {
-    LoggerImpl = console;
-} else {
-    import { NullLogger } from './null-logger';
-    LoggerImpl = NullLogger;
-}
+type ConsoleImpl = typeof console | typeof NullLogger;
 
-export const Logger = LoggerImpl;
+export const Logger: ConsoleImpl = (APP_ENV !== 'production') ? console : NullLogger;

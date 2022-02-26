@@ -86,7 +86,17 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
   \***********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"Logger\": () => (/* binding */ Logger)\n/* harmony export */ });\nif (true) {\n    console.warn(\"You are running JsFusion in \".concat(\"development\", \" mode.\"));\n}\nvar Logger = /** @class */ (function () {\n    function Logger() {\n    }\n    Logger.log = function () {\n        var args = [];\n        for (var _i = 0; _i < arguments.length; _i++) {\n            args[_i] = arguments[_i];\n        }\n        if (true) {\n            console.log.apply(console, args);\n        }\n    };\n    return Logger;\n}());\n\n\n\n//# sourceURL=webpack://jsfusion/./src/logger.ts?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"Logger\": () => (/* binding */ Logger)\n/* harmony export */ });\n/* harmony import */ var _null_logger__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./null-logger */ \"./src/null-logger.ts\");\n\nif (true) {\n    console.warn(\"You are running JsFusion in \".concat(\"development\", \" mode.\"));\n}\nvar Logger = ( true) ? console : 0;\n\n\n//# sourceURL=webpack://jsfusion/./src/logger.ts?");
+
+/***/ }),
+
+/***/ "./src/null-logger.ts":
+/*!****************************!*\
+  !*** ./src/null-logger.ts ***!
+  \****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"NullLogger\": () => (/* binding */ NullLogger)\n/* harmony export */ });\n/**\n * Strip down version of console for null logging\n */\nvar NullLogger = {\n    info: function () {\n        var message = [];\n        for (var _i = 0; _i < arguments.length; _i++) {\n            message[_i] = arguments[_i];\n        }\n    },\n    log: function () {\n        var data = [];\n        for (var _i = 0; _i < arguments.length; _i++) {\n            data[_i] = arguments[_i];\n        }\n    },\n    error: function () {\n        var data = [];\n        for (var _i = 0; _i < arguments.length; _i++) {\n            data[_i] = arguments[_i];\n        }\n    },\n    warn: function () {\n        var data = [];\n        for (var _i = 0; _i < arguments.length; _i++) {\n            data[_i] = arguments[_i];\n        }\n    }\n};\n\n\n//# sourceURL=webpack://jsfusion/./src/null-logger.ts?");
 
 /***/ }),
 
