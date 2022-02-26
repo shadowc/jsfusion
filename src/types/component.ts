@@ -7,8 +7,8 @@ export type BasicPropValueType = string | number | boolean | object;
 
 export interface PropType {
     type: BasicPropType | Array<BasicPropType>;
-    defaultValue: BasicPropValueType | Array<BasicPropValueType>;
-    required: boolean;
+    defaultValue?: BasicPropValueType | BasicPropValueType[];
+    required?: boolean;
 }
 
 export type IPropTypes = {[name: string]: PropType};
@@ -26,7 +26,7 @@ export interface IComponent {
     get parent(): IComponent|null;
     get parents(): IComponentCollection|null;
 
-    createProp(propName: string, value: BasicPropValueType | Array<BasicPropValueType>): void;
+    createProp(propName: string, value: BasicPropValueType | BasicPropValueType[]): void;
 }
 
 export interface IComponentClass {

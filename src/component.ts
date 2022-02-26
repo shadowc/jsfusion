@@ -7,7 +7,8 @@ import {
     ComponentPropsCollection,
     IComponent,
     IPropTypes,
-    IComponentCollection, BasicPropType
+    IComponentCollection,
+    BasicPropValueType,
 } from './types/component';
 
 import { ComponentRegistry } from './types/runtime';
@@ -42,7 +43,7 @@ export class Component implements IComponent {
     private initializePropTypes() {
         Object.keys(this.propTypes).forEach((propName) => {
             if (this.propTypes[propName].required) {
-                this.props[propName] = this.propTypes[propName].defaultValue;
+                this.createProp(propName, this.propTypes[propName].defaultValue);
             }
         });
     }
@@ -95,8 +96,16 @@ export class Component implements IComponent {
 
     createProp(
         propName: string,
-        value: BasicPropType | Array<BasicPropType>
+        value: BasicPropValueType | BasicPropValueType[]
     ): void {
+        if (typeof this.props[propName] !== 'undefined') {
+            // TODO: Here we use the setter, instead of creating the prop
+            this.props[propName] = value;
+            return;
+        }
+
         Logger.log(`Creating prop ${propName}`, value);
+        // TODO: Make it a getter/setter
+        this.props[propName] = value;
     }
 }

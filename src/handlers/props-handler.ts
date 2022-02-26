@@ -10,7 +10,7 @@ export class PropsHandler extends AbstractHandler implements IAttributeHandler {
     handleAttribute(attribute: string, element: Element): void {
         const attrValue = parseAttribute(element, attribute);
 
-        Logger.log(`Attempting to add props to a component for ${attribute}`, element, attrValue);
+        Logger.log(`Attempting to add props to a component for ${attribute}.`, element, attrValue);
 
         if (!element.hasAttribute('data-component')) {
             Logger.error('Error: Prop attributes must be declared in the same element that defines the component.');
@@ -19,7 +19,7 @@ export class PropsHandler extends AbstractHandler implements IAttributeHandler {
 
         if (Array.isArray(attrValue)) {
             Logger.error('Prop attributes has to be of type Object. It was parsed as an Array.', attrValue);
-            throw 'Syntax error data-props';
+            throw 'Syntax error data-props.';
         }
 
         // Get component names defined in the element
@@ -30,7 +30,7 @@ export class PropsHandler extends AbstractHandler implements IAttributeHandler {
             Object.keys(attrValue).forEach((propKey) => {
                 if (componentNames.indexOf(propKey) === -1) {
                     Logger.error('Error: Prop attributes must be declared in the same element that defines the component. Elements with multiple components must have props defined for each of its components.');
-                    throw 'data-props attribute doesn\'t belong to a component element';
+                    throw 'data-props attribute doesn\'t belong to a component element.';
                 }
             });
         }
@@ -61,11 +61,19 @@ export class PropsHandler extends AbstractHandler implements IAttributeHandler {
                     compRecord.component.createProp(propName, compProps[propName]);
                 } else {
                     Logger.error(`Invalid prop type for ${propName}.`, propType, compProps[propName]);
-                    throw 'Invalid prop-type'
+                    throw 'Invalid prop-type.'
                 }
             });
 
-            // TODO: Check that required propTypes have been parsed
+            Object.keys(compRecord.component.propTypes).forEach((propName) => {
+                if (
+                    compRecord.component.propTypes[propName].required === true
+                    && typeof compRecord.component.props[propName] === 'undefined'
+                ) {
+                    Logger.error(`The prop ${propName} is required but hasn't been defined! Consider adding a default value.`);
+                    throw 'Required prop not defined.';
+                }
+            });
         });
     }
 }
