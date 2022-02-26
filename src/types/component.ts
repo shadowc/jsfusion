@@ -2,11 +2,12 @@ import { ComponentRegistry } from './runtime';
 
 export type ComponentPropsCollection = {[index: string]: any};
 
-export type BasicPropType = typeof String | typeof Number | typeof Boolean | Object;
+export type BasicPropType = StringConstructor | NumberConstructor | BooleanConstructor | object;
+export type BasicPropValueType = string | number | boolean | object;
 
 export interface PropType {
     type: BasicPropType | Array<BasicPropType>;
-    defaultValue: string|number|boolean|Object|Array<string|number|boolean|Object>;
+    defaultValue: BasicPropValueType | Array<BasicPropValueType>;
     required: boolean;
 }
 
@@ -24,6 +25,8 @@ export interface IComponent {
     get children(): IComponent[];
     get parent(): IComponent|null;
     get parents(): IComponentCollection|null;
+
+    createProp(propName: string, value: BasicPropValueType | Array<BasicPropValueType>): void;
 }
 
 export interface IComponentClass {

@@ -1,6 +1,6 @@
 import { IComponent } from '../types/component';
 import { ComponentRegistry } from '../types/runtime';
-import {getComponentsFromElement} from "./get-component-from-element";
+import { getComponentsFromElement } from './get-components-from-element';
 
 export const getChildrenComponentsFromTree = (
     nodes: NodeListOf<ChildNode>,
