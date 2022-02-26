@@ -1,3 +1,5 @@
+import { ComponentRegistry } from './runtime';
+
 export type ComponentPropsCollection = {[index: string]: any};
 
 export type BasicPropType = typeof String | typeof Number | typeof Boolean | Object;
@@ -10,14 +12,21 @@ export interface PropType {
 
 export type IPropTypes = {[name: string]: PropType};
 
+export type IComponentCollection = {[name: string]: IComponent};
+
 export interface IComponent {
+    componentRegistry: ComponentRegistry;
     element: Element;
     props: ComponentPropsCollection;
     propTypes: IPropTypes;
 
     setPropTypes: () => void;
+
+    get children: IComponent[];
+    get parent: IComponent|null;
+    get parents: IComponentCollection|null;
 }
 
 export interface IComponentClass {
-    new(element: Element): IComponent;
+    new(element: Element, componentRegistry: ComponentRegistry): IComponent;
 }

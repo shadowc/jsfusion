@@ -57,7 +57,7 @@ import { Runtime } from 'jsfusion';
 // Import your jsfusion components here
 import Counter from './components/counter';  
 
-// Create one (and only one isntance of the runtime
+// Create one (and only one isntance of the runtime)
 const JsFusion = new Runtime();
 
 // Register your components, giving them a name
@@ -151,7 +151,8 @@ and they will be accessible through the `this.children` collection.
 // otherComponent.js
 export default class extends Component {
     myFunc() {
-        this.children.counter.doSomething();
+        // Counter
+        this.children[0].doSomething();
     }
 }
 ```
@@ -166,6 +167,21 @@ Conversely, children Components can access its parent through the
 export default class extends Component {
     myFunc() {
         this.parent.doSomething();
+    }
+}
+```
+
+If the component has many parent components (as many components can
+have access to a single HTML element), you can use the special property
+`parents` which behaves like `children` but in an upward direction:
+
+#### JavaScript
+
+```javascript
+// count.js
+export default class extends Component {
+    myFunc() {
+        this.parents.otherComponent.doSomething();
     }
 }
 ```
