@@ -15,16 +15,15 @@ export type IPropTypes = {[name: string]: PropType};
 export type IComponentCollection = {[name: string]: IComponent};
 
 export interface IComponent {
-    componentRegistry: ComponentRegistry;
     element: Element;
     props: ComponentPropsCollection;
     propTypes: IPropTypes;
 
     setPropTypes: () => void;
 
-    get children: IComponent[];
-    get parent: IComponent|null;
-    get parents: IComponentCollection|null;
+    get children(): IComponent[];
+    get parent(): IComponent|null;
+    get parents(): IComponentCollection|null;
 }
 
 export interface IComponentClass {

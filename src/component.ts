@@ -46,6 +46,8 @@ export class Component implements IComponent {
     }
 
     get children(): IComponent[] {
+        
+
         return [];
     };
 
