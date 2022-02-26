@@ -101,14 +101,16 @@ export class Runtime implements IRuntime {
         Logger.log(`Registering component "${componentName}" on`, element);
 
         if (typeof this.components[componentName] === 'undefined') {
-            throw `The component "${componentName}" is not registered in JsFusion. Did you forget to run Runtime.registerComponent('${componentName}', MyComponentClass)?`;
+            Logger.error(`The component "${componentName}" is not registered in JsFusion. Did you forget to run Runtime.registerComponent('${componentName}', MyComponentClass)?`);
+            throw 'Error while instantiating component';
         }
 
         const componentClass = this.components[componentName];
 
         this.componentRegistry.forEach((register) => {
             if (register.node === element && register.name === componentName) {
-                throw `The component "${componentName}" has been already instantiated for ${element}!`;
+                Logger.error(`The component "${componentName}" has been already instantiated for ${element}!`);
+                throw 'Error while instantiating component';
             }
         });
 

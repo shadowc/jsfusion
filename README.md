@@ -284,6 +284,12 @@ side effects there.
 > side effects to be implemented instantly, for example when any of the
 > components change this prop.
 
+> When a prop is modified mid-tree (i.e. a children of where the prop is
+> declared), only children components of this child will reflect this 
+> change, creating a de-sync between the original parent and its children 
+> until the parent decides to update its prop, thus updating all the props 
+> down-children again.
+
 > If you pass an Object as a prop value, avoid using the key '#parentProp'
 > as it is bound to cause errors!
 

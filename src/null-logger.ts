@@ -5,5 +5,6 @@ export const NullLogger = {
     info(...message: (any)[]): void {},
     log: (...data: any[]): void => {},
     error: (...data: any[]): void => {},
-    warn: (...data: any[]): void => {}
+    warn: (...data: any[]): void => {},
+    trace: (...data: any[]): void => {},
 };

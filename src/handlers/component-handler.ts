@@ -22,7 +22,8 @@ export class ComponentHandler extends AbstractHandler implements IAttributeHandl
             const parsedText: string[] = JSON.parse(text);
 
             if (!(typeof parsedText.length !== 'undefined' && parsedText instanceof Object)) {
-                throw `Invalid format when parsing data-component attribute value ${text}`;
+                Logger.error(`Invalid format when parsing data-component attribute value ${text}`);
+                throw `data-component syntax error.`;
             }
 
             parsedText.forEach((key) => {
