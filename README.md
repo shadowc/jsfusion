@@ -129,7 +129,7 @@ separating them with spaces:
 #### HTML
 
 ```html
-<div data-component="['counter', 'otherComponent']"></div>
+<div data-component='["counter", "otherComponent"]'></div>
 ```
 
 Finally, you can have children components inside your Component structure,
@@ -247,7 +247,7 @@ collection of key/value pairs with the desired values:
 #### HTML
 
 ```html
-<div data-component="counter" data-props="{ count: 0 }"></div>
+<div data-component="counter" data-props='{ "count": 0 }'></div>
 ```
 
 To provide props for multiple Components, the syntax becomes a bit more
@@ -256,10 +256,10 @@ complex:
 #### HTML
 
 ```html
-<div data-component="counter otherComponent" data-props="{
-    counter: { count: 0 },
-    otherComponent: { myValue: 'Hello World!' },
-}"></div>
+<div data-component="counter otherComponent" data-props='{
+    "counter": { "count": 0 },
+    "otherComponent": { "myValue": "Hello World!" },
+}'></div>
 ```
 
 You can also pass props from one Component to its child Component by
@@ -271,10 +271,10 @@ side effects there.
 #### HTML
 
 ```html
-<div data-component="otherComponent" data-props="{ mainCount: 0 }">
+<div data-component="otherComponent" data-props='{ "mainCount": 0 }'>
     <label>Here is a counter:</label>
 
-    <span data-component="counter" data-props="{ count: { '#parentProp': 'mainCount' } }"></span>
+    <span data-component="counter" data-props='{ "count": { "#parentProp": "mainCount" } }'></span>
 </div>
 ```
 
@@ -332,10 +332,10 @@ each other.
 #### HTML
 
 ```html
-<div data-bind="[ 
-    'text:counter.count', 
-    'text:otherComponent.myProp' 
-]"></div>
+<div data-bind='[ 
+    "text:counter.count", 
+    "text:otherComponent.myProp" 
+]'></div>
 ```
 
 
@@ -347,7 +347,7 @@ of the HTML Element will be synced with the value of the property referred.
 #### HTML
 
 ```html
-<div data-component="counter" data-props="{ count: 0 }">
+<div data-component="counter" data-props='{ "count": 0 }'>
     <span data-bind="text:counter.count"></span>
 </div>
 ```
@@ -389,10 +389,10 @@ of an array of strings in json notation:
 #### HTML
 
 ```html
-<div data-ref="[
-    'counter:refName',
-    'otherComponent:otherRef'
-]"></div>
+<div data-ref='[
+    "counter:refName",
+    "otherComponent:otherRef"
+]'></div>
 ```
 
 Once defined, these refs can be referenced from the Component class:
@@ -436,10 +436,10 @@ them with spaces or providing the proper json array of strings.
 #### HTML
 
 ```html
-<div data-on="[
-    'click:counter.handleClick',
-    'mouseup:otherComponent.handleMouseUp'
-]"></div>
+<div data-on='[
+    "click:counter.handleClick",
+    "mouseup:otherComponent.handleMouseUp"
+]'></div>
 ```
 
 Once parsed, these callbacks will be called when the event occurs.
