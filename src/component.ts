@@ -11,7 +11,8 @@ import {
 } from './types/component';
 
 import { ComponentRegistry } from './types/runtime';
-import {getComponentsFromElement} from "./helpers/get-component-from-element";
+import { getComponentsFromElement } from './helpers/get-component-from-element';
+import { getChildrenComponentsFromTree } from './helpers/get-children-components-from-tree';
 
 export class Component implements IComponent {
     private readonly componentRegistry: ComponentRegistry;
@@ -46,9 +47,9 @@ export class Component implements IComponent {
     }
 
     get children(): IComponent[] {
-        
+        let currentChildren: NodeListOf<ChildNode> = this.element.childNodes;
 
-        return [];
+        return getChildrenComponentsFromTree(currentChildren, this.componentRegistry);
     };
 
     get parents(): IComponentCollection|null {
