@@ -40,14 +40,11 @@ attribute parsing so that new binding mechanisms can be established.
 
 To use JsFusion you should install this via npm packages:
 
-`npm install git@github.com/shadowc/jsfusion`;
+`npm install jsfusion`;
 
 or
 
-`yarn add git@github.com/shadowc/jsfusion`;
-
-(There is still no package name or official version information about this
-package)
+`yarn add jsfusion`;
 
 And use it in your main `app.js` file (or the file that is loaded by every
 page in your site) by importing its runtime:
