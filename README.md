@@ -1,6 +1,6 @@
 # JsFusion
 
-![Version](https://img.shields.io/badge/version-0.0.2--alpha.1-blue)
+![Version](https://img.shields.io/badge/version-0.0.2--alpha.2-blue)
 
 ## Abstract
 

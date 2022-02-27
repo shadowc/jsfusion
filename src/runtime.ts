@@ -8,6 +8,8 @@ import { EventHandler } from './handlers/event-handler';
 import { RefHandler } from './handlers/ref-handler';
 import { Logger } from './logger';
 
+declare var APP_VERSION: string;
+
 export { Component } from './component';
 
 /**
@@ -22,7 +24,7 @@ export class Runtime implements IRuntime {
     components: ComponentCollection;
 
     constructor() {
-        this.version = '0.1-alpha1';
+        this.version = APP_VERSION;
         this.componentRegistry = [];
         this.components = {};
         this.mutationObserver = new MutationObserver(this.mutationObserverHandler.bind(this));

@@ -1,4 +1,5 @@
 const path = require('path');
+const fs = require('fs');
 const webpack = require('webpack');
 
 module.exports = {
@@ -37,6 +38,7 @@ module.exports = {
     plugins: [
         new webpack.DefinePlugin({
             APP_ENV: JSON.stringify(process.env.APP_ENV),
+            APP_VERSION: JSON.stringify(JSON.parse(fs.readFileSync(path.resolve('./package.json')).toString()).version),
         }),
     ],
     devtool: process.env.APP_ENV === 'production' ? false : 'eval-source-map',
