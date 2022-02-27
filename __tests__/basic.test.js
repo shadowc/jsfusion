@@ -21,9 +21,7 @@ it('Can import and use the Runtime object, it exposes the version in package.jso
     expect(JsFusion.version).toEqual(packageVersion);
 });
 
-class StandardComponent extends Component {
-
-}
+class StandardComponent extends Component {}
 
 it('Can create and register a component', () => {
     JsFusion.registerComponent('standardComponent', StandardComponent);
