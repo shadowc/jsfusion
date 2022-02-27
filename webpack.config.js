@@ -20,7 +20,6 @@ module.exports = {
                 type: 'umd',
             }
         },
-        'samples/html/js/app': path.resolve('./samples/app')
     },
     output: {
         path: path.resolve('.'),

@@ -36,7 +36,8 @@
         "test": "APP_ENV=development ./node_modules/.bin/jest",
         "build": "APP_ENV=production ./node_modules/.bin/webpack",
         "build-dev": "APP_ENV=development ./node_modules/.bin/webpack",
-        "build-watch": "APP_ENV=development ./node_modules/.bin/webpack --watch"
+        "build-watch": "APP_ENV=development ./node_modules/.bin/webpack --watch",
+        "build-samples": "APP_ENV=development ./node_modules/.bin/webpack --config=./samples/webpack.config.js --watch"
     },
     "devDependencies": {
         "jest": "^27.5.1",
