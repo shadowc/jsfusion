@@ -42,7 +42,8 @@
     "jest": {
         "transform": {
             "^.+\\.[t|j]sx?$": "babel-jest"
-        }
+        },
+        "testEnvironment": "jsdom"
     },
     "devDependencies": {
         "@babel/preset-env": "^7.16.11",

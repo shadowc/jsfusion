@@ -16,11 +16,11 @@ export type IPropTypes = {[name: string]: PropType};
 export type IComponentCollection = {[name: string]: IComponent};
 
 export interface IComponent {
-    element: Element;
+    readonly element: Element;
     props: ComponentPropsCollection;
     propTypes: IPropTypes;
 
-    setPropTypes: () => void;
+    setPropTypes: () => IPropTypes;
 
     get children(): IComponent[];
     get parent(): IComponent|null;

@@ -18,21 +18,24 @@ import { Logger } from './logger';
  */
 export class Component implements IComponent {
     private readonly componentRegistry: ComponentRegistry;
-    element: Element;
+    private readonly _element: Element;
     props: ComponentPropsCollection;
     propTypes: IPropTypes;
 
     constructor(element: Element, componentRegistry: ComponentRegistry) {
         this.componentRegistry = componentRegistry;
-        this.element = element;
+        this._element = element;
         this.props = {};
-        this.propTypes = {};
+        this.propTypes = this.setPropTypes();
 
-        this.setPropTypes();
         this.initializePropTypes();
     }
 
-    setPropTypes() {}
+    get element() {
+        return this._element;
+    }
+
+    setPropTypes() { return {}; }
 
     /**
      * Initializes PropTypes for the Component when Props have

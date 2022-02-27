@@ -7,11 +7,12 @@ import { ComponentRegistry } from './types/runtime';
  */
 export declare class Component implements IComponent {
     private readonly componentRegistry;
-    element: Element;
+    private readonly _element;
     props: ComponentPropsCollection;
     propTypes: IPropTypes;
     constructor(element: Element, componentRegistry: ComponentRegistry);
-    setPropTypes(): void;
+    get element(): Element;
+    setPropTypes(): {};
     /**
      * Initializes PropTypes for the Component when Props have
      * default values.
