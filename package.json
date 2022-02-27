@@ -18,18 +18,20 @@
     "publishConfig": {
         "access": "public"
     },
-    "module": "dist/runtime.js",
-    "main": "dist/runtime.js",
+    "module": "dist/runtime.min.js",
+    "main": "dist/runtime.umd.js",
     "types": "dist/types/index.d.ts",
     "files": [
         "dist/runtime.js",
-        "dist/runtime.dev.js",
+        "dist/runtime.min.js",
+        "dist/runtime.umd.js",
+        "dist/runtime.umd.dev.js",
         "dist/types/**/*"
     ],
     "scripts": {
         "clean": "rm -fr dist",
         "types": "tsc --noEmit false --declaration true --emitDeclarationOnly true --outDir dist/types",
-        "prerelease": "npm run build && npm run build-dev && git --no-pager diff && echo && npm pack --dry-run",
+        "prerelease": "npm run clean && npm run build && npm run build-dev && npm run types && git --no-pager diff && echo && npm pack --dry-run",
         "release": "npm publish",
         "test": "APP_ENV=development ./node_modules/.bin/jest",
         "build": "APP_ENV=production ./node_modules/.bin/webpack",
