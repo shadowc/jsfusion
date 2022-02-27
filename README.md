@@ -1,8 +1,8 @@
 # JsFusion
 
-![Version](https://img.shields.io/badge/version-0.1--alpha1-blue)
+![Version](https://img.shields.io/badge/version-0.0.2--alpha.1-blue)
 
-## Abstract 
+## Abstract
 
 JsFusion is a JavaScript Framework designed to work together with technologies
 such as [@hotwired/turbo](https://github.com/hotwired/turbo) to seamlessly
