@@ -33,13 +33,20 @@
         "types": "tsc --noEmit false --declaration true --emitDeclarationOnly true --outDir dist/types",
         "prerelease": "npm run clean && npm run build && npm run build-dev && npm run types && git --no-pager diff && echo && npm pack --dry-run",
         "release": "npm publish",
-        "test": "APP_ENV=development ./node_modules/.bin/jest",
+        "test": "APP_ENV=development ./node_modules/.bin/jest .*.test.js",
         "build": "APP_ENV=production ./node_modules/.bin/webpack",
         "build-dev": "APP_ENV=development ./node_modules/.bin/webpack",
         "build-watch": "APP_ENV=development ./node_modules/.bin/webpack --watch",
         "build-samples": "APP_ENV=development ./node_modules/.bin/webpack --config=./samples/webpack.config.js --watch"
     },
+    "jest": {
+        "transform": {
+            "^.+\\.[t|j]sx?$": "babel-jest"
+        }
+    },
     "devDependencies": {
+        "@babel/preset-env": "^7.16.11",
+        "babel-jest": "^27.5.1",
         "jest": "^27.5.1",
         "ts-loader": "^9.2.6",
         "typescript": "^4.5.5",
