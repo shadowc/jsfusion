@@ -8,6 +8,7 @@ let JsFusion;
 
 beforeAll(() => {
     expect(Runtime).not.toBe(null);
+    expect(Component).not.toBe(null);
 
     JsFusion = new Runtime();
 
