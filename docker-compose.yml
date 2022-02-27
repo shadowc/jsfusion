@@ -17,4 +17,4 @@ services:
     working_dir: /home/node/app
     volumes:
       - ./:/home/node/app
-    command: bash -c "npm install && npm run build-watch"
+    command: bash -c "npm install && npm run build-samples"
