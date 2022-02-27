@@ -1,4 +1,4 @@
-import { Component } from '../../src/component';
+import { Component } from 'jsfusion';
 
 export default class Counter extends Component {
     setPropTypes() {

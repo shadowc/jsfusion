@@ -1,4 +1,4 @@
-import { Runtime } from '../src/runtime';
+import { Runtime } from 'jsfusion';
 import Counter from './test-components/counter';
 
 const JsFusion = new Runtime();
