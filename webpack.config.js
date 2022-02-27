@@ -7,12 +7,24 @@ module.exports = {
         ignored: '**/node_modules',
     },
     entry: {
-        'dist/runtime': path.resolve('./src/runtime'),
-        'test/html/js/app': path.resolve('./test/app')
+        [process.env.APP_ENV === 'production' ? 'dist/runtime.min' : 'dist/runtime']: {
+            import: path.resolve('./src/runtime'),
+            library: {
+                type: 'commonjs-static',
+            }
+        },
+        [process.env.APP_ENV === 'production' ? 'dist/runtime.umd' : 'dist/runtime.umd.dev']: {
+            import: path.resolve('./src/runtime'),
+            library: {
+                name: 'JsFusion',
+                type: 'umd',
+            }
+        },
+        'samples/html/js/app': path.resolve('./samples/app')
     },
     output: {
         path: path.resolve('.'),
-        filename: '[name].js'
+        filename: '[name].js',
     },
     module: {
         rules: [
@@ -28,7 +40,7 @@ module.exports = {
             APP_ENV: JSON.stringify(process.env.APP_ENV),
         }),
     ],
-    devtool: process.env.APP_ENV === 'production' ? false : 'eval',
+    devtool: process.env.APP_ENV === 'production' ? false : 'eval-source-map',
     resolve: {
         extensions: ['.tsx', '.ts', '.js'],
     },

@@ -1,8 +1,3 @@
-/**
- * This is the framework abstract component class.
- *
- * All components should derive from this class, and add proper functionality
- */
 import {
     ComponentPropsCollection,
     IComponent,
@@ -14,8 +9,13 @@ import {
 import { ComponentRegistry } from './types/runtime';
 import { getComponentsFromElement } from './helpers/get-components-from-element';
 import { getChildrenComponentsFromTree } from './helpers/get-children-components-from-tree';
-import {Logger} from "./logger";
+import { Logger } from './logger';
 
+/**
+ * This is the framework abstract component class.
+ *
+ * All components should derive from this class, and add proper functionality
+ */
 export class Component implements IComponent {
     private readonly componentRegistry: ComponentRegistry;
     element: Element;
@@ -42,8 +42,8 @@ export class Component implements IComponent {
      */
     private initializePropTypes() {
         Object.keys(this.propTypes).forEach((propName) => {
-            if (this.propTypes[propName].required) {
-                this.createProp(propName, this.propTypes[propName].defaultValue);
+            if (this.propTypes[propName].required && typeof this.propTypes[propName].defaultValue !== 'undefined') {
+                this.createProp(propName, <BasicPropValueType|BasicPropValueType[]>this.propTypes[propName].defaultValue);
             }
         });
     }
@@ -58,7 +58,7 @@ export class Component implements IComponent {
         let currentParent = this.element.parentElement;
 
         let localRegistry: ComponentRegistry;
-        while (currentParent.nodeName.toLowerCase() !== 'html') {
+        while (currentParent && currentParent.nodeName.toLowerCase() !== 'html') {
             localRegistry = getComponentsFromElement(currentParent, this.componentRegistry);
 
             if (localRegistry.length > 0) {
@@ -81,7 +81,7 @@ export class Component implements IComponent {
         let currentParent = this.element.parentElement;
 
         let localRegistry: ComponentRegistry;
-        while (currentParent.nodeName.toLowerCase() !== 'html') {
+        while (currentParent && currentParent.nodeName.toLowerCase() !== 'html') {
             localRegistry = getComponentsFromElement(currentParent, this.componentRegistry);
 
             if (localRegistry.length > 0) {
@@ -99,7 +99,7 @@ export class Component implements IComponent {
         value: BasicPropValueType | BasicPropValueType[]
     ): void {
         if (typeof this.props[propName] !== 'undefined') {
-            // TODO: Here we use the setter, instead of creating the prop
+            // Here we use the setter, instead of creating the prop
             this.props[propName] = value;
             return;
         }

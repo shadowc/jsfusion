@@ -1,7 +1,3 @@
-/**
- * Main JsFusion framework runtime file. This is to be executed in every page load
- * and will start observing changes to the DOM in order to instantiate components.
- */
 import { ObservableAttributes } from './observableAttributes';
 import { ComponentCollection, ComponentRegistry, IRuntime } from './types/runtime';
 import { IComponentClass } from './types/component';
@@ -14,6 +10,10 @@ import { Logger } from './logger';
 
 export { Component } from './component';
 
+/**
+ * Main JsFusion framework runtime file. This is to be executed in every page load
+ * and will start observing changes to the DOM in order to instantiate components.
+ */
 export class Runtime implements IRuntime {
     version: string;
     mutationObserver: MutationObserver;
