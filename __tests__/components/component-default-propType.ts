@@ -5,19 +5,12 @@ export default class extends Component {
         return {
             counter: {
                 type: Number,
+                defaultValue: 5,
             },
             aString: {
                 type: String,
+                defaultValue: 'hello',
             },
-            aBoolean: {
-                type: Boolean,
-            },
-            anArray: {
-                type: Array,
-            },
-            anObject: {
-                type: Object,
-            }
         };
     }
 }

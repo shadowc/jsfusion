@@ -5,7 +5,7 @@ export default class extends Component {
         return {
             counter: {
                 type: Number,
-                default: 0,
+                defaultValue: 0,
             },
         };
     }

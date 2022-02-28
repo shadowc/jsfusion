@@ -7,6 +7,9 @@ export default class extends Component {
                 type: Number,
                 required: true,
             },
+            otherProp: {
+                type: String,
+            },
         };
     }
 }

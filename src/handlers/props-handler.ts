@@ -56,7 +56,7 @@ export class PropsHandler extends AbstractHandler implements IAttributeHandler {
                     || (propType.type === Boolean && typeof compProps[propName] === 'boolean')
                     || (propType.type === Number && typeof compProps[propName] === 'number')
                     || (propType.type === Array && Array.isArray(compProps[propName]))
-                    || (compProps[propName] instanceof Object)
+                    || (propType.type === Object && (compProps[propName] instanceof Object && !Array.isArray(compProps[propName])))
                 ) {
                     compRecord.component.createProp(propName, compProps[propName]);
                 } else {
