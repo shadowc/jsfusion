@@ -35,9 +35,7 @@
         "release": "npm publish",
         "test": "APP_ENV=development ./node_modules/.bin/jest .*.test.js",
         "build": "APP_ENV=production ./node_modules/.bin/webpack",
-        "build-dev": "APP_ENV=development ./node_modules/.bin/webpack",
-        "build-watch": "APP_ENV=development ./node_modules/.bin/webpack --watch",
-        "build-samples": "APP_ENV=development ./node_modules/.bin/webpack --config=./samples/webpack.config.js --watch"
+        "build-dev": "APP_ENV=development ./node_modules/.bin/webpack"
     },
     "jest": {
         "transform": {
