@@ -93,3 +93,13 @@ it('Allows a component with non required props to be created and assigned props'
 
     expect(JsFusion.componentRegistry[0].component.props.counter).toEqual(3);
 });
+
+it('Errors when a prop type string is assigned to a prop type number', () => {
+    JsFusion.registerComponent('basicComponent', ComponentWithBasicPropType);
+
+    document.body.innerHTML = '<div id="myComponent" data-component="basicComponent" data-props=\'{ "counter": "3" }\'></div>';
+
+    expect(() => {
+        JsFusion.start();
+    }).toThrow();
+});
