@@ -1,6 +1,7 @@
 import { Runtime, Component } from '../dist/runtime.min';
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
+import StandardComponent from './components/basic-component';
 
 import './mutation-observer-mock';
 
@@ -20,8 +21,6 @@ it('Can import and use the Runtime object, it exposes the version in package.jso
 
     expect(JsFusion.version).toEqual(packageVersion);
 });
-
-class StandardComponent extends Component {}
 
 it('Can create and register a component', () => {
     JsFusion.registerComponent('standardComponent', StandardComponent);

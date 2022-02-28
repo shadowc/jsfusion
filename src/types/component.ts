@@ -22,9 +22,9 @@ export interface IComponent {
 
     setPropTypes: () => IPropTypes;
 
-    get children(): IComponent[];
-    get parent(): IComponent|null;
-    get parents(): IComponentCollection|null;
+    readonly children: IComponent[];
+    readonly parent: IComponent|null;
+    readonly parents: IComponentCollection|null;
 
     createProp(propName: string, value: BasicPropValueType | BasicPropValueType[]): void;
 }

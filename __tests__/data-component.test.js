@@ -4,6 +4,7 @@ import BasicComponent from './components/basic-component';
 import OtherBasicComponent from './components/basic-component';
 
 import './mutation-observer-mock';
+import StandardComponent from "./components/basic-component";
 
 let JsFusion;
 
@@ -145,5 +146,51 @@ it('Cannot assign propTypes to a component already instantiated', () => {
         JsFusion.componentRegistry[0].component.propTypes = {
             count: { type: Number },
         };
+    }).toThrow();
+});
+
+it('Cannot assign children to a component manually', () => {
+    JsFusion.registerComponent('basicComponent', BasicComponent);
+
+    document.body.innerHTML = '<div data-component="basicComponent"></div>';
+
+    JsFusion.start();
+
+    expect(() => {
+        JsFusion.componentRegistry[0].component.children = [];
+    }).toThrow();
+});
+
+it('Cannot assign parent to a component manually', () => {
+    JsFusion.registerComponent('basicComponent', BasicComponent);
+
+    document.body.innerHTML = '<div data-component="basicComponent"></div>';
+
+    JsFusion.start();
+
+    expect(() => {
+        JsFusion.componentRegistry[0].component.parent = null;
+    }).toThrow();
+});
+
+it('Cannot assign parents to a component manually', () => {
+    JsFusion.registerComponent('basicComponent', BasicComponent);
+
+    document.body.innerHTML = '<div data-component="basicComponent"></div>';
+
+    JsFusion.start();
+
+    expect(() => {
+        JsFusion.componentRegistry[0].component.parents = {};
+    }).toThrow();
+});
+
+it('Cannot instantiate the same component twice', () => {
+    JsFusion.registerComponent('basicComponent', BasicComponent);
+
+    document.body.innerHTML = '<div data-component="basicComponent basicComponent"></div>';
+
+    expect(() => {
+        JsFusion.start();
     }).toThrow();
 });
