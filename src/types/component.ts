@@ -18,7 +18,7 @@ export type IComponentCollection = {[name: string]: IComponent};
 export interface IComponent {
     readonly element: Element;
     props: ComponentPropsCollection;
-    propTypes: IPropTypes;
+    readonly propTypes: IPropTypes;
 
     setPropTypes: () => IPropTypes;
 

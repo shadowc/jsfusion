@@ -133,3 +133,17 @@ it('Cannot assign a different element to a component', () => {
         JsFusion.componentRegistry[0].component.element = document.createElement('div');
     }).toThrow();
 });
+
+it('Cannot assign propTypes to a component already instantiated', () => {
+    JsFusion.registerComponent('basicComponent', BasicComponent);
+
+    document.body.innerHTML = '<div data-component="basicComponent"></div>';
+
+    JsFusion.start();
+
+    expect(() => {
+        JsFusion.componentRegistry[0].component.propTypes = {
+            count: { type: Number },
+        };
+    }).toThrow();
+});

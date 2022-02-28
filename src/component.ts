@@ -20,19 +20,23 @@ export class Component implements IComponent {
     private readonly componentRegistry: ComponentRegistry;
     private readonly _element: Element;
     props: ComponentPropsCollection;
-    propTypes: IPropTypes;
+    private readonly _propTypes: IPropTypes;
 
     constructor(element: Element, componentRegistry: ComponentRegistry) {
         this.componentRegistry = componentRegistry;
         this._element = element;
         this.props = {};
-        this.propTypes = this.setPropTypes();
+        this._propTypes = this.setPropTypes();
 
         this.initializePropTypes();
     }
 
     get element() {
         return this._element;
+    }
+
+    get propTypes() {
+        return this._propTypes;
     }
 
     setPropTypes() { return {}; }

@@ -9,9 +9,10 @@ export declare class Component implements IComponent {
     private readonly componentRegistry;
     private readonly _element;
     props: ComponentPropsCollection;
-    propTypes: IPropTypes;
+    private readonly _propTypes;
     constructor(element: Element, componentRegistry: ComponentRegistry);
     get element(): Element;
+    get propTypes(): IPropTypes;
     setPropTypes(): {};
     /**
      * Initializes PropTypes for the Component when Props have
