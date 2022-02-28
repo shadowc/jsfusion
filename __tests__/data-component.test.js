@@ -4,7 +4,6 @@ import BasicComponent from './components/basic-component';
 import OtherBasicComponent from './components/basic-component';
 
 import './mutation-observer-mock';
-import StandardComponent from "./components/basic-component";
 
 let JsFusion;
 
