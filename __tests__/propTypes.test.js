@@ -4,9 +4,9 @@ import ComponentRequiredPropType from './components/component-required-propType'
 import ComponentRequiredDefaultPropType from './components/component-required-default-propType';
 import ComponentDefaultPropType from './components/component-default-propType';
 import CounterComponent from './components/counter-component';
-import { assertComponentRegistry } from './assert-component-helpers';
+import { assertComponentRegistry } from './helpers/assert-component-helpers';
 
-import './mutation-observer-mock';
+import './helpers/mutation-observer-mock';
 
 let JsFusion;
 

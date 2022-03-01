@@ -1,9 +1,9 @@
 import { Runtime } from '../dist/runtime.min';
-import { assertComponents, assertComponentRegistry } from './assert-component-helpers';
+import { assertComponents, assertComponentRegistry } from './helpers/assert-component-helpers';
 import BasicComponent from './components/basic-component';
 import OtherBasicComponent from './components/basic-component';
 
-import './mutation-observer-mock';
+import './helpers/mutation-observer-mock';
 
 let JsFusion;
 

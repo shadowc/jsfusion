@@ -3,7 +3,7 @@ import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import StandardComponent from './components/basic-component';
 
-import './mutation-observer-mock';
+import './helpers/mutation-observer-mock';
 
 let JsFusion;
 
