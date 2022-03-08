@@ -29,9 +29,9 @@ export const assertComponentRegistry = (options, JsFusion) => {
 /**
  * @param {{ name: string, instance: object, element: Element}} option
  * @param {Runtime} JsFusion
- * @returns {object|null}
+ * @returns {{ name: string, component: object, node: Element}|null}
  */
-const findRegistry = (option, JsFusion) => {
+export const findRegistry = (option, JsFusion) => {
     for (let i = 0; i < JsFusion.componentRegistry.length; i++) {
         const record = JsFusion.componentRegistry[i];
         if (record.name === option.name && record.node === option.element && record.component instanceof option.instance) {
