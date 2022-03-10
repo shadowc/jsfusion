@@ -10,7 +10,7 @@ import { ComponentRegistry } from './types/runtime';
 import { getComponentsFromElement } from './helpers/get-components-from-element';
 import { getChildrenComponentsFromTree } from './helpers/get-children-components-from-tree';
 import { Logger } from './logger';
-import { ComponentProps } from './prop';
+import { ComponentProps } from './props';
 
 /**
  * This is the framework abstract component class.

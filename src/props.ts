@@ -11,8 +11,6 @@ export class ComponentProps implements IComponentPropsCollection {
     }
 
     addProp(propName: string, value: BasicPropValueType | BasicPropValueType[]) {
-        this._valueMap[propName] = value;
-
         Object.defineProperty(this, propName, {
             get: (): BasicPropValueType | BasicPropValueType[] => {
                 return this._valueMap[propName];
@@ -21,5 +19,7 @@ export class ComponentProps implements IComponentPropsCollection {
                 this._valueMap[propName] = value;
             }
         });
+        
+        this[propName] = value;
     }
 }
