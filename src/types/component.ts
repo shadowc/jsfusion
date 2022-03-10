@@ -1,9 +1,14 @@
 import { ComponentRegistry } from './runtime';
 
-export type ComponentPropsCollection = {[index: string]: any};
-
 export type BasicPropType = StringConstructor | NumberConstructor | BooleanConstructor | object;
 export type BasicPropValueType = string | number | boolean | object;
+
+export type DOMComponentProps = { [index: string]: BasicPropValueType | BasicPropValueType[] };
+export type DOMPropComplexDefinition = { [index: string]: DOMComponentProps };
+
+export interface IComponentPropsCollection extends DOMComponentProps {
+    addProp: (propName: string, value: BasicPropValueType | BasicPropValueType[]) => void;
+}
 
 export interface PropType {
     type: BasicPropType | Array<BasicPropType>;
@@ -17,7 +22,7 @@ export type IComponentCollection = {[name: string]: IComponent};
 
 export interface IComponent {
     readonly element: Element;
-    props: ComponentPropsCollection;
+    props: IComponentPropsCollection;
     readonly propTypes: IPropTypes;
 
     setPropTypes: () => IPropTypes;

@@ -1,5 +1,5 @@
 import { IAttributeHandler } from '../types/attribute-handler';
-import { ComponentPropsCollection } from '../types/component';
+import { DOMComponentProps, DOMPropComplexDefinition } from '../types/component';
 import { Logger } from '../logger';
 import { AbstractHandler } from './abstract-handler';
 import { parseAttribute } from '../helpers/parse-attribute';
@@ -38,8 +38,9 @@ export class PropsHandler extends AbstractHandler implements IAttributeHandler {
         // Parse component props according to propTypes
         const localRegistry = getComponentsFromElement(element, this.parent.componentRegistry);
 
-        const componentProps: ComponentPropsCollection
-            = localRegistry.length === 1 ? { [localRegistry[0].name]: attrValue } : <ComponentPropsCollection>attrValue;
+        const componentProps: DOMPropComplexDefinition = localRegistry.length === 1
+            ? { [localRegistry[0].name]: <DOMComponentProps>attrValue }
+            : <DOMPropComplexDefinition>(attrValue);
 
         localRegistry.forEach((compRecord) => {
             const compProps = componentProps[compRecord.name];
