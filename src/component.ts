@@ -18,21 +18,28 @@ import { Logger } from './logger';
  */
 export class Component implements IComponent {
     private readonly componentRegistry: ComponentRegistry;
-    element: Element;
+    private readonly _element: Element;
     props: ComponentPropsCollection;
-    propTypes: IPropTypes;
+    private readonly _propTypes: IPropTypes;
 
     constructor(element: Element, componentRegistry: ComponentRegistry) {
         this.componentRegistry = componentRegistry;
-        this.element = element;
+        this._element = element;
         this.props = {};
-        this.propTypes = {};
+        this._propTypes = this.setPropTypes();
 
-        this.setPropTypes();
         this.initializePropTypes();
     }
 
-    setPropTypes() {}
+    get element() {
+        return this._element;
+    }
+
+    get propTypes() {
+        return this._propTypes;
+    }
+
+    setPropTypes() { return {}; }
 
     /**
      * Initializes PropTypes for the Component when Props have
@@ -41,11 +48,22 @@ export class Component implements IComponent {
      * @private
      */
     private initializePropTypes() {
+        let hasRequiredProps = false;
+
         Object.keys(this.propTypes).forEach((propName) => {
-            if (this.propTypes[propName].required && typeof this.propTypes[propName].defaultValue !== 'undefined') {
+            if (this.propTypes[propName].required && typeof this.propTypes[propName].defaultValue === 'undefined') {
+                hasRequiredProps = true;
+            }
+
+            if (typeof this.propTypes[propName].defaultValue !== 'undefined') {
                 this.createProp(propName, <BasicPropValueType|BasicPropValueType[]>this.propTypes[propName].defaultValue);
             }
         });
+
+        if (hasRequiredProps && !this.element.hasAttribute('data-props')) {
+            Logger.error('Failed to initialize component. The component has required props but no data-props attribute found.');
+            throw 'Failed to initialize component. The component has required props but no data-props attribute found.';
+        }
     }
 
     get children(): IComponent[] {

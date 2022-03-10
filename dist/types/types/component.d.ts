@@ -16,13 +16,13 @@ export declare type IComponentCollection = {
     [name: string]: IComponent;
 };
 export interface IComponent {
-    element: Element;
+    readonly element: Element;
     props: ComponentPropsCollection;
-    propTypes: IPropTypes;
-    setPropTypes: () => void;
-    get children(): IComponent[];
-    get parent(): IComponent | null;
-    get parents(): IComponentCollection | null;
+    readonly propTypes: IPropTypes;
+    setPropTypes: () => IPropTypes;
+    readonly children: IComponent[];
+    readonly parent: IComponent | null;
+    readonly parents: IComponentCollection | null;
     createProp(propName: string, value: BasicPropValueType | BasicPropValueType[]): void;
 }
 export interface IComponentClass {

@@ -1,6 +1,7 @@
 # JsFusion
 
-![Version](https://img.shields.io/badge/version-0.0.2--alpha.2-blue)
+![Version](https://img.shields.io/badge/version-0.0.2--alpha.3-blue)
+![Build+Jest](https://github.com/shadowc/jsfusion/actions/workflows/webpack-jest.yml/badge.svg)
 
 ## Abstract
 
@@ -191,17 +192,18 @@ ReactJS). You initialize props by adding a `data-props` attribute
 to the main element of a component.
 
 Props can be passed to Children components props and its values will be
-synced when any of the Components in the chain changes this value either
-from JavaScript or from the DOM by changing the value of the attribute.
+synced downwards when any of the Components in the chain changes this 
+value either from JavaScript or from the DOM by changing the value of 
+the attribute.
 
 In addition to this, props can bind to different behavior, using the
 `data-bind` attribute to extend the functionality of your components with
 little coding in the way.
 
-To have props, first you need to define your component's propTypes object.
+To have props, first you need to define your component's `propTypes` object.
 You will only be able to assign props that are defined by this interface.
 You do so by overriding the `setPropTypes` function in your Component 
-class.
+class and use it for returning your `propTypes` object.
 
 #### JavaScript
 
@@ -210,7 +212,7 @@ import { Component } from 'jsfusion';
 
 export default class Counter extends Component {
     setPropTypes() {
-        this.propTypes = {
+        return {
             count: {
                 type: Number, // Types can be Number, String, Object or Array
                 defaultValue: 0,  // If you need a default value, you can assign it here

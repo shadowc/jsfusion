@@ -56,7 +56,7 @@ export class PropsHandler extends AbstractHandler implements IAttributeHandler {
                     || (propType.type === Boolean && typeof compProps[propName] === 'boolean')
                     || (propType.type === Number && typeof compProps[propName] === 'number')
                     || (propType.type === Array && Array.isArray(compProps[propName]))
-                    || (propType.type instanceof Object && compProps[propName] instanceof Object)
+                    || (propType.type === Object && (compProps[propName] instanceof Object && !Array.isArray(compProps[propName])))
                 ) {
                     compRecord.component.createProp(propName, compProps[propName]);
                 } else {
@@ -67,7 +67,7 @@ export class PropsHandler extends AbstractHandler implements IAttributeHandler {
 
             Object.keys(compRecord.component.propTypes).forEach((propName) => {
                 if (
-                    compRecord.component.propTypes[propName].required === true
+                    compRecord.component.propTypes[propName].required
                     && typeof compRecord.component.props[propName] === 'undefined'
                 ) {
                     Logger.error(`The prop ${propName} is required but hasn't been defined! Consider adding a default value.`);
