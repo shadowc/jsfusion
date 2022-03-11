@@ -4,6 +4,8 @@ import {
     IComponent,
     DeferredPropValueType,
 } from './types/component';
+import {isValidPropType} from "./helpers/is-valid-prop-type";
+import {Logger} from "./logger";
 
 export class ComponentProps implements IComponentPropsCollection {
     [index: string]: BasicPropValueType | BasicPropValueType[];
@@ -34,7 +36,20 @@ export class ComponentProps implements IComponentPropsCollection {
 
                 return this._valueMap[propName];
             },
+
             set: (value: BasicPropValueType | BasicPropValueType[]) => {
+                if (this._component.propTypes[propName] === null) {
+                    Logger.error(`Attempting to assign property ${propName} but it wasn't defined in propTypes. Did you forget to redefine setPropTypes() in your controller and make it return an object?`);
+                    throw 'Attempting to set a non defined prop';
+
+                }
+
+                if (!isValidPropType(this._component.propTypes[propName], value)) {
+                    Logger.error(`Invalid prop type for ${propName}.`, this._component.propTypes[propName], value);
+                    throw 'Invalid prop-type.';
+
+                }
+
                 this._valueMap[propName] = value;
             }
         });

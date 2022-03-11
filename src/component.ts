@@ -124,7 +124,6 @@ export class Component implements IComponent {
         }
 
         Logger.log(`Creating prop ${propName}`, value);
-        // TODO: Make it a getter/setter
         this.props.addProp(propName, value);
     }
 }

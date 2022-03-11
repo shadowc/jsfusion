@@ -5,6 +5,7 @@ import { AbstractHandler } from './abstract-handler';
 import { parseAttribute } from '../helpers/parse-attribute';
 import { getComponentNamesFromParsedAttribute } from '../helpers/get-component-names-from-parsed-attribute';
 import { getComponentsFromElement } from '../helpers/get-components-from-element';
+import { isValidPropType } from '../helpers/is-valid-prop-type';
 
 export class PropsHandler extends AbstractHandler implements IAttributeHandler {
     handleAttribute(attribute: string, element: Element): void {
@@ -52,17 +53,11 @@ export class PropsHandler extends AbstractHandler implements IAttributeHandler {
                     return;
                 }
 
-                if (
-                    (propType.type === String && typeof compProps[propName] === 'string')
-                    || (propType.type === Boolean && typeof compProps[propName] === 'boolean')
-                    || (propType.type === Number && typeof compProps[propName] === 'number')
-                    || (propType.type === Array && Array.isArray(compProps[propName]))
-                    || (propType.type === Object && (compProps[propName] instanceof Object && !Array.isArray(compProps[propName])))
-                ) {
+                if (isValidPropType(propType, compProps[propName])) {
                     compRecord.component.createProp(propName, compProps[propName]);
                 } else {
                     Logger.error(`Invalid prop type for ${propName}.`, propType, compProps[propName]);
-                    throw 'Invalid prop-type.'
+                    throw 'Invalid prop-type.';
                 }
             });
 
