@@ -1,7 +1,11 @@
 import { ComponentRegistry } from './runtime';
 
+export interface DeferredPropValueType {
+    '#parentProp': string
+}
+
 export type BasicPropType = StringConstructor | NumberConstructor | BooleanConstructor | object;
-export type BasicPropValueType = string | number | boolean | object;
+export type BasicPropValueType = null | string | number | boolean | object | DeferredPropValueType;
 
 export type DOMComponentProps = { [index: string]: BasicPropValueType | BasicPropValueType[] };
 export type DOMPropComplexDefinition = { [index: string]: DOMComponentProps };
