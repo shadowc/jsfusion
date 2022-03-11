@@ -23,7 +23,7 @@ export class ComponentProps implements IComponentPropsCollection {
                 if (
                     rawValue !== null
                     && typeof rawValue === 'object'
-                    && typeof((rawValue as DeferredPropValueType)['#parentProp']) !== 'string'
+                    && typeof((rawValue as DeferredPropValueType)['#parentProp']) === 'string'
                 ) {
                     if (!this._component.parent) {
                         return null;
