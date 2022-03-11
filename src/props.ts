@@ -4,11 +4,12 @@ import {
     IComponent,
     DeferredPropValueType,
 } from './types/component';
-import {isValidPropType} from "./helpers/is-valid-prop-type";
-import {Logger} from "./logger";
+import { isValidPropType } from './helpers/is-valid-prop-type';
+import { Logger } from './logger';
 
 export class ComponentProps implements IComponentPropsCollection {
     [index: string]: BasicPropValueType | BasicPropValueType[];
+
     private readonly _valueMap: {[index: string]: BasicPropValueType | BasicPropValueType[]};
     private _component: IComponent;
 
