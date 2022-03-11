@@ -1,4 +1,5 @@
 import { BasicPropValueType, DeferredPropValueType, PropType } from '../types/component';
+import {isDeferredPropType} from "./is-deferred-prop-type";
 
 export const isValidPropType = (
     propType: PropType,
@@ -10,9 +11,5 @@ export const isValidPropType = (
         || (propType.type === Number && typeof propValue === 'number')
         || (propType.type === Array && Array.isArray(propValue))
         || (propType.type === Object && (propValue instanceof Object && !Array.isArray(propValue)))
-    ) || (
-        propValue !== null
-        && typeof propValue === 'object'
-        && typeof (propValue as DeferredPropValueType)['#parentProp'] === 'string'
-    );
+    ) || isDeferredPropType(propValue);
 };

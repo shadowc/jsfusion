@@ -1,9 +1,18 @@
 import { ComponentRegistry } from './runtime';
-export declare type ComponentPropsCollection = {
-    [index: string]: any;
-};
+export interface DeferredPropValueType {
+    '#parentProp': string;
+}
 export declare type BasicPropType = StringConstructor | NumberConstructor | BooleanConstructor | object;
-export declare type BasicPropValueType = string | number | boolean | object;
+export declare type BasicPropValueType = null | string | number | boolean | object | DeferredPropValueType;
+export declare type DOMComponentProps = {
+    [index: string]: BasicPropValueType | BasicPropValueType[];
+};
+export declare type DOMPropComplexDefinition = {
+    [index: string]: DOMComponentProps;
+};
+export interface IComponentPropsCollection extends DOMComponentProps {
+    addProp: (propName: string, value: BasicPropValueType | BasicPropValueType[]) => void;
+}
 export interface PropType {
     type: BasicPropType | Array<BasicPropType>;
     defaultValue?: BasicPropValueType | BasicPropValueType[];
@@ -17,7 +26,7 @@ export declare type IComponentCollection = {
 };
 export interface IComponent {
     readonly element: Element;
-    props: ComponentPropsCollection;
+    props: IComponentPropsCollection;
     readonly propTypes: IPropTypes;
     setPropTypes: () => IPropTypes;
     readonly children: IComponent[];

@@ -1,4 +1,4 @@
-import { ComponentPropsCollection, IComponent, IPropTypes, IComponentCollection, BasicPropValueType } from './types/component';
+import { IComponentPropsCollection, IComponent, IPropTypes, IComponentCollection, BasicPropValueType } from './types/component';
 import { ComponentRegistry } from './types/runtime';
 /**
  * This is the framework abstract component class.
@@ -8,7 +8,7 @@ import { ComponentRegistry } from './types/runtime';
 export declare class Component implements IComponent {
     private readonly componentRegistry;
     private readonly _element;
-    props: ComponentPropsCollection;
+    props: IComponentPropsCollection;
     private readonly _propTypes;
     constructor(element: Element, componentRegistry: ComponentRegistry);
     get element(): Element;
