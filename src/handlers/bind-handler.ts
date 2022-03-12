@@ -9,8 +9,6 @@ export class BindHandler extends AbstractHandler implements IAttributeHandler {
     handleAttribute(attribute: string, element: HTMLElement) {
         const bindStrategies = getBindStrategiesFromParsedAttribute(parseAttribute(element, attribute));
 
-        // Logger.log(`Attempting to bind a value to an element for ${attribute}`, element, attrValue);
-
         bindStrategies.forEach((bindStrategy) => {
             Logger.log(`Attempting to bind for ${bindStrategy.strategyName} on "${bindStrategy.componentName}.${bindStrategy.propName}".`);
 
@@ -26,7 +24,7 @@ export class BindHandler extends AbstractHandler implements IAttributeHandler {
             const component = getNearestComponent(element, bindStrategy.componentName, this.parent);
 
             if (component === null) {
-                Logger.log(`Error trying to find component "${bindStrategy.componentName}" for data binding. Have you mispelled the component name?`);
+                Logger.log(`Error trying to find component "${bindStrategy.componentName}" for data binding. Have you misspelled the component name?`);
                 throw 'Invalid component in data-bind. Component not found.';
             }
 

@@ -1,22 +1,21 @@
 import { IComponent } from '../types/component';
-import { IRuntime } from '../types/runtime';
+import { ComponentRegistry, IRuntime } from '../types/runtime';
 import { getComponentsFromElement } from './get-components-from-element';
 
 export const getNearestComponent = (element: HTMLElement, componentName: string, JsFusion: IRuntime): IComponent | null => {
-    let currentElem: HTMLElement | null = element;
+    let currentParent: HTMLElement | null = element;
+    let localRegistry: ComponentRegistry;
 
-    while (currentElem !== null) {
-        if (currentElem.hasAttribute('data-component')) {
-            const components = getComponentsFromElement(element, JsFusion.componentRegistry);
+    while (currentParent && currentParent.nodeName.toLowerCase() !== 'html') {
+        localRegistry = getComponentsFromElement(currentParent, JsFusion.componentRegistry);
 
-            for (let i = 0; i < components.length; i++) {
-                if (components[i].name === componentName) {
-                    return components[i].component;
-                }
+        for (let i = 0; i < localRegistry.length; i++) {
+            if (localRegistry[i].name === componentName) {
+                return localRegistry[i].component;
             }
         }
 
-        currentElem = currentElem.parentElement;
+        currentParent = currentParent.parentElement;
     }
 
     return null;
