@@ -7,8 +7,8 @@ import {
 import { isValidPropType } from './helpers/is-valid-prop-type';
 import { isDeferredPropType } from './helpers/is-deferred-prop-type';
 import { Logger } from './logger';
-import {getParentForDeferredProp} from "./helpers/get-parent-for-deferred-prop";
-import {getPropNameForDeferredProp} from "./helpers/get-prop-name-for-deferred-prop";
+import { getParentForDeferredProp } from './helpers/get-parent-for-deferred-prop';
+import { getPropNameForDeferredProp } from './helpers/get-prop-name-for-deferred-prop';
 
 export class ComponentProps implements IComponentPropsCollection {
     [index: string]: BasicPropValueType | BasicPropValueType[];
@@ -66,7 +66,7 @@ export class ComponentProps implements IComponentPropsCollection {
                         throw 'Invalid prop value for deferred prop.';
                     }
 
-                    // No side effects here?
+                    // TODO: Side effects
                     this._valueMap[propName] = value;
                 } else {
                     if (isDeferredPropType(this._valueMap[propName])) {
