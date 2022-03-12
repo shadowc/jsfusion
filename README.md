@@ -474,6 +474,10 @@ export default class extends Component {
 }
 ```
 
+### Emitting your own events from a controller
+
+TBD.
+
 ### LifeCycle functions
 
 TBD.
