@@ -7,7 +7,7 @@ import { Logger } from '../logger';
  * Throws an error if the information parsed is not valid
  */
 export const getComponentNamesFromParsedAttribute = (
-    parsedAttribute: string|boolean|number|Object|Array<any>
+    parsedAttribute: string|boolean|number|object|Array<any>
 ): string[] => {
     if (
         !Array.isArray(parsedAttribute)

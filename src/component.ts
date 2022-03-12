@@ -45,8 +45,6 @@ export class Component implements IComponent {
     /**
      * Initializes PropTypes for the Component when Props have
      * default values.
-     *
-     * @private
      */
     private initializePropTypes() {
         let hasRequiredProps = false;
