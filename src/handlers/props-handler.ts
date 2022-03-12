@@ -1,10 +1,11 @@
 import { IAttributeHandler } from '../types/attribute-handler';
-import { ComponentPropsCollection } from '../types/component';
+import { DOMComponentProps, DOMPropComplexDefinition } from '../types/component';
 import { Logger } from '../logger';
 import { AbstractHandler } from './abstract-handler';
 import { parseAttribute } from '../helpers/parse-attribute';
 import { getComponentNamesFromParsedAttribute } from '../helpers/get-component-names-from-parsed-attribute';
 import { getComponentsFromElement } from '../helpers/get-components-from-element';
+import { isValidPropType } from '../helpers/is-valid-prop-type';
 
 export class PropsHandler extends AbstractHandler implements IAttributeHandler {
     handleAttribute(attribute: string, element: Element): void {
@@ -38,8 +39,9 @@ export class PropsHandler extends AbstractHandler implements IAttributeHandler {
         // Parse component props according to propTypes
         const localRegistry = getComponentsFromElement(element, this.parent.componentRegistry);
 
-        const componentProps: ComponentPropsCollection
-            = localRegistry.length === 1 ? { [localRegistry[0].name]: attrValue } : <ComponentPropsCollection>attrValue;
+        const componentProps: DOMPropComplexDefinition = localRegistry.length === 1
+            ? { [localRegistry[0].name]: <DOMComponentProps>attrValue }
+            : <DOMPropComplexDefinition>(attrValue);
 
         localRegistry.forEach((compRecord) => {
             const compProps = componentProps[compRecord.name];
@@ -51,17 +53,11 @@ export class PropsHandler extends AbstractHandler implements IAttributeHandler {
                     return;
                 }
 
-                if (
-                    (propType.type === String && typeof compProps[propName] === 'string')
-                    || (propType.type === Boolean && typeof compProps[propName] === 'boolean')
-                    || (propType.type === Number && typeof compProps[propName] === 'number')
-                    || (propType.type === Array && Array.isArray(compProps[propName]))
-                    || (propType.type === Object && (compProps[propName] instanceof Object && !Array.isArray(compProps[propName])))
-                ) {
+                if (isValidPropType(propType, compProps[propName])) {
                     compRecord.component.createProp(propName, compProps[propName]);
                 } else {
                     Logger.error(`Invalid prop type for ${propName}.`, propType, compProps[propName]);
-                    throw 'Invalid prop-type.'
+                    throw 'Invalid prop-type.';
                 }
             });
 

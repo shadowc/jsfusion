@@ -1,6 +1,6 @@
 # JsFusion
 
-![Version](https://img.shields.io/badge/version-0.0.2--alpha.3-blue)
+![Version](https://img.shields.io/badge/version-0.0.3--alpha.1-blue)
 ![Build+Jest](https://github.com/shadowc/jsfusion/actions/workflows/webpack-jest.yml/badge.svg)
 
 ## Abstract
@@ -277,6 +277,20 @@ side effects there.
 </div>
 ```
 
+You can define the component that should be passing down the prop by
+specifying the parent name:
+
+```html
+<div data-component="parentComponent otherComponent" data-props='{
+    "parentComponent": { "mainCount": 0 },
+    "otherComponent": { "mainCount": 1 }
+}'>
+    <label>Here is a counter:</label>
+
+    <span data-component="counter" data-props='{ "count": { "#parentProp": "parentComponent.mainCount" } }'></span>
+</div>
+```
+
 > You can only pass down props from parents to children. Note that you can
 > access props by using the `this.children` and `this.parent` special
 > properties. So you should only be passing down props when you want its
@@ -284,13 +298,14 @@ side effects there.
 > components change this prop.
 
 > When a prop is modified mid-tree (i.e. a children of where the prop is
-> declared), only children components of this child will reflect this 
-> change, creating a de-sync between the original parent and its children 
-> until the parent decides to update its prop, thus updating all the props 
-> down-children again.
+> declared), all the tree of props will reflect this 
+> change, causing side effects in all the chain. Keep this into account!
 
 > If you pass an Object as a prop value, avoid using the key '#parentProp'
 > as it is bound to cause errors!
+
+> *Alpha*: The feature for detecting changes in properties or elements in
+> Objects or Arrays in props is not implemented yet.
 
 Finally, since props are passed using Json notation, you can easily
 pass objects created by a PHP function, for example, when using `Twig` as

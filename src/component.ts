@@ -1,5 +1,5 @@
 import {
-    ComponentPropsCollection,
+    IComponentPropsCollection,
     IComponent,
     IPropTypes,
     IComponentCollection,
@@ -10,6 +10,7 @@ import { ComponentRegistry } from './types/runtime';
 import { getComponentsFromElement } from './helpers/get-components-from-element';
 import { getChildrenComponentsFromTree } from './helpers/get-children-components-from-tree';
 import { Logger } from './logger';
+import { ComponentProps } from './props';
 
 /**
  * This is the framework abstract component class.
@@ -19,13 +20,13 @@ import { Logger } from './logger';
 export class Component implements IComponent {
     private readonly componentRegistry: ComponentRegistry;
     private readonly _element: Element;
-    props: ComponentPropsCollection;
+    props: IComponentPropsCollection;
     private readonly _propTypes: IPropTypes;
 
     constructor(element: Element, componentRegistry: ComponentRegistry) {
         this.componentRegistry = componentRegistry;
         this._element = element;
-        this.props = {};
+        this.props = new ComponentProps(this);
         this._propTypes = this.setPropTypes();
 
         this.initializePropTypes();
@@ -123,7 +124,6 @@ export class Component implements IComponent {
         }
 
         Logger.log(`Creating prop ${propName}`, value);
-        // TODO: Make it a getter/setter
-        this.props[propName] = value;
+        this.props.addProp(propName, value);
     }
 }
