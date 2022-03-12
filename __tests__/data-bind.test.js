@@ -56,11 +56,11 @@ it('Should bind a prop to a text and display it in the DOM', () => {
 
     const element = document.getElementById('counter');
 
-    expect(element.innerText).toBe('0');
+    expect(element.innerText).toBe(0);
 
     JsFusion.componentRegistry[0].component.props.counter = 4;
 
-    expect(element.innerText).toBe('4');
+    expect(element.innerText).toBe(4);
 });
 
 it('Should bind a prop to a component that is up in the parent tree', () => {
@@ -75,11 +75,11 @@ it('Should bind a prop to a component that is up in the parent tree', () => {
 
     const element = document.getElementById('span-bind');
 
-    expect(element.innerText).toBe('0');
+    expect(element.innerText).toBe(0);
 
     JsFusion.componentRegistry[0].component.props.counter = 4;
 
-    expect(element.innerText).toBe('4');
+    expect(element.innerText).toBe(4);
 });
 
 it('Should bind a prop that is a deferred prop form a parent component', () => {
@@ -97,9 +97,9 @@ it('Should bind a prop that is a deferred prop form a parent component', () => {
 
     const element = document.getElementById('span-bind');
 
-    expect(element.innerText).toBe('0');
+    expect(element.innerText).toBe(0);
 
     JsFusion.componentRegistry[0].component.props.counter = 4;
 
-    expect(element.innerText).toBe('4');
+    expect(element.innerText).toBe(4);
 });

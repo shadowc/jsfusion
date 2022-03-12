@@ -1,4 +1,4 @@
-import { ObservableAttributes } from './observableAttributes';
+import { ObservableAttributes } from './observable-attributes';
 import { ComponentCollection, ComponentRegistry, IRuntime } from './types/runtime';
 import { IComponentClass } from './types/component';
 import { ComponentHandler } from './handlers/component-handler';
@@ -7,6 +7,8 @@ import { BindHandler } from './handlers/bind-handler';
 import { EventHandler } from './handlers/event-handler';
 import { RefHandler } from './handlers/ref-handler';
 import { Logger } from './logger';
+import { DataBindStrategies } from './data-bind-strategies';
+import {TextDataBinder} from "./bind-strategies/text-data-binder";
 
 declare var APP_VERSION: string;
 
@@ -22,6 +24,7 @@ export class Runtime implements IRuntime {
     observableAttributes: ObservableAttributes;
     componentRegistry: ComponentRegistry;
     components: ComponentCollection;
+    dataBindHandlers: DataBindStrategies;
 
     constructor() {
         this.version = APP_VERSION;
@@ -29,6 +32,7 @@ export class Runtime implements IRuntime {
         this.components = {};
         this.mutationObserver = new MutationObserver(this.mutationObserverHandler.bind(this));
         this.observableAttributes = new ObservableAttributes();
+        this.dataBindHandlers = new DataBindStrategies();
 
         // Register the conventional attribute handlers
         this.observableAttributes.registerAttributeHandler(
@@ -49,12 +53,19 @@ export class Runtime implements IRuntime {
         this.observableAttributes.registerAttributeHandler(
             'data-on',
             new EventHandler(this),
-        )
+        );
 
         this.observableAttributes.registerAttributeHandler(
             'data-ref',
             new RefHandler(this),
-        )
+        );
+
+        this.dataBindHandlers.registerDataBindStrategy(
+            'text',
+            new TextDataBinder(),
+        );
+
+        // TODO: This is the place for adding plugins that register new handlers
     }
 
     mutationObserverHandler(mutationList: MutationRecord[]) {
@@ -75,11 +86,9 @@ export class Runtime implements IRuntime {
             const components = document.body.querySelectorAll('*['+attributeName+']');
 
             components.forEach((componentElement) => {
-                this.observableAttributes.attributes[attributeName].handleAttribute(attributeName, componentElement);
+                this.observableAttributes.attributes[attributeName].handleAttribute(attributeName, <HTMLElement>componentElement);
             });
         });
-
-        // TODO: This is the place for adding plugins that register new handlers
 
         // Now start observing for DOM changes
         this.mutationObserver.observe(document.body, {

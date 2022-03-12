@@ -24,6 +24,8 @@ export type IPropTypes = {[name: string]: PropType};
 
 export type IComponentCollection = {[name: string]: IComponent};
 
+export type SideEffectCallBack = (propValue: BasicPropValueType | BasicPropValueType[]) => void;
+
 export interface IComponent {
     readonly element: Element;
     props: IComponentPropsCollection;
@@ -36,6 +38,7 @@ export interface IComponent {
     readonly parents: IComponentCollection|null;
 
     createProp(propName: string, value: BasicPropValueType | BasicPropValueType[]): void;
+    addPropSideEffect(propName: string, handler: SideEffectCallBack): void;
 }
 
 export interface IComponentClass {

@@ -4,6 +4,7 @@ import {
     IPropTypes,
     IComponentCollection,
     BasicPropValueType,
+    SideEffectCallBack,
 } from './types/component';
 
 import { ComponentRegistry } from './types/runtime';
@@ -123,5 +124,9 @@ export class Component implements IComponent {
 
         Logger.log(`Creating prop ${propName}`, value);
         this.props.addProp(propName, value);
+    }
+
+    addPropSideEffect(propName: string, handler: SideEffectCallBack) {
+
     }
 }

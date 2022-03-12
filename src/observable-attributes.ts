@@ -1,4 +1,4 @@
-import { IObservableAttributes, ObservableAttributeCollection } from './types/observableAttributes';
+import { IObservableAttributes, ObservableAttributeCollection } from './types/observable-attributes';
 import { IAttributeHandler } from './types/attribute-handler';
 import { Logger } from './logger';
 

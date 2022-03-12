@@ -4,7 +4,7 @@ import { parseAttribute } from '../helpers/parse-attribute';
 import { getComponentNamesFromParsedAttribute } from '../helpers/get-component-names-from-parsed-attribute';
 
 export class ComponentHandler extends AbstractHandler implements IAttributeHandler {
-    handleAttribute(attribute: string, element: Element): void {
+    handleAttribute(attribute: string, element: HTMLElement): void {
         const componentNames = getComponentNamesFromParsedAttribute(parseAttribute(element, attribute));
 
         componentNames.forEach((component) => {
