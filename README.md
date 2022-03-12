@@ -1,6 +1,6 @@
 # JsFusion
 
-![Version](https://img.shields.io/badge/version-0.0.4--alpha.1-blue)
+![Version](https://img.shields.io/badge/version-0.0.5--alpha.1-blue)
 ![Build+Jest](https://github.com/shadowc/jsfusion/actions/workflows/webpack-jest.yml/badge.svg)
 
 ## Abstract
@@ -473,6 +473,10 @@ export default class extends Component {
     }
 }
 ```
+
+### Emitting your own events from a controller
+
+TBD.
 
 ### LifeCycle functions
 

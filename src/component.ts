@@ -4,7 +4,9 @@ import {
     IPropTypes,
     IComponentCollection,
     BasicPropValueType,
-    SideEffectCallBack, IPropSideEffectCollection,
+    SideEffectCallBack,
+    IPropSideEffectCollection,
+    IRefCollection,
 } from './types/component';
 
 import { ComponentRegistry } from './types/runtime';
@@ -24,12 +26,14 @@ export class Component implements IComponent {
     props: IComponentPropsCollection;
     propSideEffects: IPropSideEffectCollection;
     private readonly _propTypes: IPropTypes;
+    private readonly _refs: IRefCollection;
 
     constructor(element: Element, componentRegistry: ComponentRegistry) {
         this.componentRegistry = componentRegistry;
         this._element = element;
         this.props = new ComponentProps(this);
         this.propSideEffects = {};
+        this._refs = {};
         this._propTypes = this.setPropTypes();
 
         this.initializePropTypes();
@@ -41,6 +45,10 @@ export class Component implements IComponent {
 
     get propTypes() {
         return this._propTypes;
+    }
+
+    get refs() {
+        return this._refs;
     }
 
     setPropTypes() { return {}; }
@@ -134,5 +142,19 @@ export class Component implements IComponent {
         }
 
         this.propSideEffects[propName].push(handler);
+    }
+
+    addRef(refName: string, element: HTMLElement) {
+        if (typeof this._refs[refName] === 'undefined') {
+            this._refs[refName] = element;
+            return;
+        }
+
+        // There is a ref with the name provided
+        if (!Array.isArray(this._refs[refName])) {
+            this._refs[refName] = [ <HTMLElement>this._refs[refName] ];
+        }
+
+        (this._refs[refName] as HTMLElement[]).push(element);
     }
 }

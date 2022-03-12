@@ -25,9 +25,11 @@ export type IPropTypes = {[name: string]: PropType};
 
 export type IComponentCollection = {[name: string]: IComponent};
 
+export type IRefCollection = {[name: string]: HTMLElement | HTMLElement[]};
+
 export type SideEffectCallBack = (propValue: BasicPropValueType | BasicPropValueType[]) => void;
 
-export type IPropSideEffectCollection = { [propName: string]: SideEffectCallBack[] };
+export type IPropSideEffectCollection = {[propName: string]: SideEffectCallBack[]};
 
 export interface IComponent {
     readonly element: Element;
@@ -40,9 +42,11 @@ export interface IComponent {
     readonly children: IComponent[];
     readonly parent: IComponent|null;
     readonly parents: IComponentCollection|null;
+    readonly refs: IRefCollection;
 
     createProp(propName: string, value: BasicPropValueType | BasicPropValueType[]): void;
     addPropSideEffect(propName: string, handler: SideEffectCallBack): void;
+    addRef(refName: string, element: HTMLElement): void;
 }
 
 export interface IComponentClass {
