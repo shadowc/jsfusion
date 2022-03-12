@@ -97,5 +97,13 @@ export class ComponentProps implements IComponentPropsCollection {
                 callback(this[propName]);
             });
         }
+
+        // If the component has child components with deferred props, we need to propagate side effects
+        this._component.children.forEach((childComponent) => {
+            const childProp = childComponent.props[propName];
+            if (typeof childProp !== 'undefined') {
+                childComponent.props.handleSideEffects(propName);
+            }
+        });
     }
 }

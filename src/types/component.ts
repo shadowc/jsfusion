@@ -12,7 +12,7 @@ export type DOMPropComplexDefinition = { [index: string]: DOMComponentProps };
 
 export interface IComponentPropsCollection extends DOMComponentProps {
     addProp: (propName: string, value: BasicPropValueType | BasicPropValueType[]) => void;
-    handleSideEffects: (propName: string, value: BasicPropValueType | BasicPropValueType[]) => void;
+    handleSideEffects: (propName: string) => void;
 }
 
 export interface PropType {
