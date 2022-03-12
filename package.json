@@ -1,6 +1,6 @@
 {
     "name": "jsfusion",
-    "version": "0.0.5-alpha.1",
+    "version": "0.0.5-alpha.2",
     "license": "MIT",
     "description": "A JavaScript ProtoFramework inspired on StimulusJS",
     "author": {
@@ -31,10 +31,11 @@
     "scripts": {
         "clean": "rm -fr dist",
         "types": "tsc --noEmit false --declaration true --emitDeclarationOnly true --outDir dist/types",
-        "prerelease": "npm run clean && npm run build && npm run build-dev && npm run types && git --no-pager diff && echo && npm pack --dry-run",
+        "prerelease": "npm run build-all && git --no-pager diff && echo && npm pack --dry-run",
         "release": "npm publish",
         "test": "APP_ENV=development ./node_modules/.bin/jest .*.test.js",
         "build": "APP_ENV=production ./node_modules/.bin/webpack",
+        "build-all": "npm run clean && npm run build && npm run build-dev && npm run types",
         "build-dev": "APP_ENV=development ./node_modules/.bin/webpack"
     },
     "jest": {
