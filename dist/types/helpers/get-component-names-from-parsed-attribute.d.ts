@@ -4,4 +4,4 @@
  *
  * Throws an error if the information parsed is not valid
  */
-export declare const getComponentNamesFromParsedAttribute: (parsedAttribute: string | boolean | number | Object | Array<any>) => string[];
+export declare const getComponentNamesFromParsedAttribute: (parsedAttribute: string | boolean | number | object | Array<any>) => string[];

@@ -1,5 +1,5 @@
 import { IRuntime } from './runtime';
-export declare type ObservableAttributeCallback = (attribute: string, element: Element) => void;
+export declare type ObservableAttributeCallback = (attribute: string, element: HTMLElement) => void;
 export interface IAttributeHandler {
     parent: IRuntime;
     handleAttribute: ObservableAttributeCallback;

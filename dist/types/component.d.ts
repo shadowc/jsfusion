@@ -1,4 +1,4 @@
-import { IComponentPropsCollection, IComponent, IPropTypes, IComponentCollection, BasicPropValueType } from './types/component';
+import { IComponentPropsCollection, IComponent, IPropTypes, IComponentCollection, BasicPropValueType, SideEffectCallBack, IPropSideEffectCollection } from './types/component';
 import { ComponentRegistry } from './types/runtime';
 /**
  * This is the framework abstract component class.
@@ -9,6 +9,7 @@ export declare class Component implements IComponent {
     private readonly componentRegistry;
     private readonly _element;
     props: IComponentPropsCollection;
+    propSideEffects: IPropSideEffectCollection;
     private readonly _propTypes;
     constructor(element: Element, componentRegistry: ComponentRegistry);
     get element(): Element;
@@ -17,12 +18,11 @@ export declare class Component implements IComponent {
     /**
      * Initializes PropTypes for the Component when Props have
      * default values.
-     *
-     * @private
      */
     private initializePropTypes;
     get children(): IComponent[];
     get parents(): IComponentCollection | null;
     get parent(): IComponent | null;
     createProp(propName: string, value: BasicPropValueType | BasicPropValueType[]): void;
+    addPropSideEffect(propName: string, handler: SideEffectCallBack): void;
 }

@@ -1,5 +1,6 @@
-import { IObservableAttributes } from './observableAttributes';
+import { IObservableAttributes } from './observable-attributes';
 import { IComponentClass, IComponent } from './component';
+import { IDataBindHandlerCollection } from './data-bind';
 export declare type ComponentRegistry = Array<{
     name: string;
     component: IComponent;
@@ -14,6 +15,7 @@ export interface IRuntime {
     observableAttributes: IObservableAttributes;
     componentRegistry: ComponentRegistry;
     components: ComponentCollection;
+    dataBindHandlers: IDataBindHandlerCollection;
     mutationObserverHandler: (mutationList: MutationRecord[]) => void;
     start: () => void;
     registerComponent: (componentName: string, component: IComponentClass) => void;
