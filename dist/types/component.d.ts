@@ -1,4 +1,4 @@
-import { IComponentPropsCollection, IComponent, IPropTypes, IComponentCollection, BasicPropValueType, SideEffectCallBack, IPropSideEffectCollection } from './types/component';
+import { IComponentPropsCollection, IComponent, IPropTypes, IComponentCollection, BasicPropValueType, SideEffectCallBack, IPropSideEffectCollection, IRefCollection } from './types/component';
 import { ComponentRegistry } from './types/runtime';
 /**
  * This is the framework abstract component class.
@@ -11,9 +11,11 @@ export declare class Component implements IComponent {
     props: IComponentPropsCollection;
     propSideEffects: IPropSideEffectCollection;
     private readonly _propTypes;
+    private readonly _refs;
     constructor(element: Element, componentRegistry: ComponentRegistry);
     get element(): Element;
     get propTypes(): IPropTypes;
+    get refs(): IRefCollection;
     setPropTypes(): {};
     /**
      * Initializes PropTypes for the Component when Props have
@@ -25,4 +27,5 @@ export declare class Component implements IComponent {
     get parent(): IComponent | null;
     createProp(propName: string, value: BasicPropValueType | BasicPropValueType[]): void;
     addPropSideEffect(propName: string, handler: SideEffectCallBack): void;
+    addRef(refName: string, element: HTMLElement): void;
 }

@@ -25,6 +25,9 @@ export declare type IPropTypes = {
 export declare type IComponentCollection = {
     [name: string]: IComponent;
 };
+export declare type IRefCollection = {
+    [name: string]: HTMLElement | HTMLElement[];
+};
 export declare type SideEffectCallBack = (propValue: BasicPropValueType | BasicPropValueType[]) => void;
 export declare type IPropSideEffectCollection = {
     [propName: string]: SideEffectCallBack[];
@@ -38,8 +41,10 @@ export interface IComponent {
     readonly children: IComponent[];
     readonly parent: IComponent | null;
     readonly parents: IComponentCollection | null;
+    readonly refs: IRefCollection;
     createProp(propName: string, value: BasicPropValueType | BasicPropValueType[]): void;
     addPropSideEffect(propName: string, handler: SideEffectCallBack): void;
+    addRef(refName: string, element: HTMLElement): void;
 }
 export interface IComponentClass {
     new (element: Element, componentRegistry: ComponentRegistry): IComponent;
