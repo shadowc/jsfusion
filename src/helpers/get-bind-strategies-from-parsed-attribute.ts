@@ -4,10 +4,8 @@ import { IDataBindStrategy } from '../types/data-bind';
 export const getBindStrategiesFromParsedAttribute = (
     parsedAttribute: string|boolean|number|object|Array<any>
 ): IDataBindStrategy[] => {
-    if (
-        !Array.isArray(parsedAttribute)
-    ) {
-        Logger.error('Invalid data when trying to parse data-component attribute', parsedAttribute);
+    if (!Array.isArray(parsedAttribute)) {
+        Logger.error('Invalid data when trying to parse data-bind attribute', parsedAttribute);
         throw 'Syntax error data-bind.';
     }
 
@@ -15,7 +13,7 @@ export const getBindStrategiesFromParsedAttribute = (
 
     parsedAttribute.forEach((word) => {
         if (typeof word !== 'string') {
-            Logger.error('Invalid data when trying to parse data-component attribute', parsedAttribute);
+            Logger.error('Invalid data when trying to parse data-bind attribute', parsedAttribute);
             throw 'Syntax error data-bind.';
         }
 
