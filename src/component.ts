@@ -4,7 +4,7 @@ import {
     IPropTypes,
     IComponentCollection,
     BasicPropValueType,
-    SideEffectCallBack,
+    SideEffectCallBack, IPropSideEffectCollection,
 } from './types/component';
 
 import { ComponentRegistry } from './types/runtime';
@@ -22,12 +22,14 @@ export class Component implements IComponent {
     private readonly componentRegistry: ComponentRegistry;
     private readonly _element: Element;
     props: IComponentPropsCollection;
+    propSideEffects: IPropSideEffectCollection;
     private readonly _propTypes: IPropTypes;
 
     constructor(element: Element, componentRegistry: ComponentRegistry) {
         this.componentRegistry = componentRegistry;
         this._element = element;
         this.props = new ComponentProps(this);
+        this.propSideEffects = {};
         this._propTypes = this.setPropTypes();
 
         this.initializePropTypes();
@@ -127,6 +129,10 @@ export class Component implements IComponent {
     }
 
     addPropSideEffect(propName: string, handler: SideEffectCallBack) {
+        if (typeof this.propSideEffects[propName] === 'undefined') {
+            this.propSideEffects[propName] = [];
+        }
 
+        this.propSideEffects[propName].push(handler);
     }
 }
