@@ -12,6 +12,7 @@ export declare type DOMPropComplexDefinition = {
 };
 export interface IComponentPropsCollection extends DOMComponentProps {
     addProp: (propName: string, value: BasicPropValueType | BasicPropValueType[]) => void;
+    handleSideEffects: (propName: string) => void;
 }
 export interface PropType {
     type: BasicPropType | Array<BasicPropType>;
@@ -24,15 +25,21 @@ export declare type IPropTypes = {
 export declare type IComponentCollection = {
     [name: string]: IComponent;
 };
+export declare type SideEffectCallBack = (propValue: BasicPropValueType | BasicPropValueType[]) => void;
+export declare type IPropSideEffectCollection = {
+    [propName: string]: SideEffectCallBack[];
+};
 export interface IComponent {
     readonly element: Element;
     props: IComponentPropsCollection;
+    propSideEffects: IPropSideEffectCollection;
     readonly propTypes: IPropTypes;
     setPropTypes: () => IPropTypes;
     readonly children: IComponent[];
     readonly parent: IComponent | null;
     readonly parents: IComponentCollection | null;
     createProp(propName: string, value: BasicPropValueType | BasicPropValueType[]): void;
+    addPropSideEffect(propName: string, handler: SideEffectCallBack): void;
 }
 export interface IComponentClass {
     new (element: Element, componentRegistry: ComponentRegistry): IComponent;

@@ -66,8 +66,8 @@ export class ComponentProps implements IComponentPropsCollection {
                         throw 'Invalid prop value for deferred prop.';
                     }
 
-                    // TODO: Side effects
                     this._valueMap[propName] = value;
+                    this.handleSideEffects(propName);
                 } else {
                     if (isDeferredPropType(this._valueMap[propName])) {
                         const parentCmp = getParentForDeferredProp(this._component, this._valueMap[propName]);
@@ -77,11 +77,11 @@ export class ComponentProps implements IComponentPropsCollection {
                             throw 'Invalid prop value for deferred prop.';
                         }
 
-                        // TODO: Side effects
                         parentCmp.props[getPropNameForDeferredProp(this._valueMap[propName]) as string] = value;
+                        this.handleSideEffects(propName);
                     } else {
-                        // TODO: Side effects
                         this._valueMap[propName] = value;
+                        this.handleSideEffects(propName);
                     }
                 }
             }
@@ -89,5 +89,21 @@ export class ComponentProps implements IComponentPropsCollection {
 
         // Actually set the value with side effects at creation
         this[propName] = value;
+    }
+
+    handleSideEffects(propName: string): void {
+        if (typeof this._component.propSideEffects[propName] !== 'undefined') {
+            this._component.propSideEffects[propName].forEach((callback) => {
+                callback(this[propName]);
+            });
+        }
+
+        // If the component has child components with deferred props, we need to propagate side effects
+        this._component.children.forEach((childComponent) => {
+            const childProp = childComponent.props[propName];
+            if (typeof childProp !== 'undefined') {
+                childComponent.props.handleSideEffects(propName);
+            }
+        });
     }
 }

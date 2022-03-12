@@ -8,7 +8,7 @@ export class AbstractHandler implements IAttributeHandler {
         this.parent = parent;
     }
 
-    handleAttribute(attribute: string, element: Element): void {
+    handleAttribute(attribute: string, element: HTMLElement): void {
         // Abstract method!
     }
 }

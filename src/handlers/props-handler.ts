@@ -8,7 +8,7 @@ import { getComponentsFromElement } from '../helpers/get-components-from-element
 import { isValidPropType } from '../helpers/is-valid-prop-type';
 
 export class PropsHandler extends AbstractHandler implements IAttributeHandler {
-    handleAttribute(attribute: string, element: Element): void {
+    handleAttribute(attribute: string, element: HTMLElement): void {
         const attrValue = parseAttribute(element, attribute);
 
         Logger.log(`Attempting to add props to a component for ${attribute}.`, element, attrValue);

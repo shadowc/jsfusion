@@ -1,6 +1,7 @@
-import { ObservableAttributes } from './observableAttributes';
+import { ObservableAttributes } from './observable-attributes';
 import { ComponentCollection, ComponentRegistry, IRuntime } from './types/runtime';
 import { IComponentClass } from './types/component';
+import { DataBindStrategies } from './data-bind-strategies';
 export { Component } from './component';
 /**
  * Main JsFusion framework runtime file. This is to be executed in every page load
@@ -12,6 +13,7 @@ export declare class Runtime implements IRuntime {
     observableAttributes: ObservableAttributes;
     componentRegistry: ComponentRegistry;
     components: ComponentCollection;
+    dataBindHandlers: DataBindStrategies;
     constructor();
     mutationObserverHandler(mutationList: MutationRecord[]): void;
     start(): void;

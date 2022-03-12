@@ -5,4 +5,5 @@ export declare class ComponentProps implements IComponentPropsCollection {
     private readonly _component;
     constructor(component: IComponent);
     addProp(propName: string, value: BasicPropValueType | BasicPropValueType[]): void;
+    handleSideEffects(propName: string): void;
 }
