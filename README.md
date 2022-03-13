@@ -9,7 +9,7 @@ JsFusion is a JavaScript Framework designed to work together with technologies
 such as [@hotwired/turbo](https://github.com/hotwired/turbo) to seamlessly
 apply client functionality to HTML templates dynamically. It is greatly 
 inspired on [Stimulus](https://github.com/hotwired/stimulus) (improving upon
-it) and somewhat inspired in ReactJS and VueJS (borrow some syntax
+it) and somewhat inspired in ReactJS and VueJS (borrowed some syntax
 strategies and implementations)
 
 ## Current version
@@ -41,8 +41,6 @@ prefixed attributes so that when they are added or changed, your parsing
 method will be called.
 - `data-bind` special cases: You will be able to extend the `data-bind`
 attribute parsing so that new binding strategies can be established.
-
-## Usage
 
 ## Installation and Setup
 
