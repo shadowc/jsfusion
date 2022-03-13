@@ -264,3 +264,36 @@ it('Should increment the counter when I click on a button', () => {
 
     expect(countingSpan.innerText).toBe(2);
 });
+
+it('Can dispatch a custom event and catch it from the same component', () => {
+    JsFusion.registerComponent('counter', CounterComponent);
+
+    document.body.innerHTML = `
+<div id="counter" data-component="counter" data-on="customEvent:counter.handleCustomEvent">
+    <span id="counting-span" data-bind="text:counter.counter"></span>
+    <button id="button" data-on="click:counter.emitCustomEventFromButton">Increment!</button>
+</div>    
+    `;
+
+    JsFusion.start();
+
+    document.getElementById('button').click();
+    expect(document.getElementById('addedElement').innerHTML).toBe('my custom event');
+});
+
+it('Can dispatch a custom event form a component and catch it from another', () => {
+    JsFusion.registerComponent('counter', CounterComponent);
+    JsFusion.registerComponent('otherComponent', CounterComponent);
+
+    document.body.innerHTML = `
+<div id="counter" data-component="counter" data-on="customEvent:counter.handleCustomEvent">
+    <span id="counting-span" data-bind="text:counter.counter"></span>
+    <button id="button" data-component="otherComponent" data-on="click:otherComponent.emitCustomEvent">Increment!</button>
+</div>    
+    `;
+
+    JsFusion.start();
+
+    document.getElementById('button').click();
+    expect(document.getElementById('addedElement').innerHTML).toBe('my custom event');
+});

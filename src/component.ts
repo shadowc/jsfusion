@@ -23,14 +23,14 @@ import { EventHandlerCallback, EventHandlerCollection} from './types/data-on';
  */
 export class Component implements IComponent {
     private readonly componentRegistry: ComponentRegistry;
-    private readonly _element: Element;
+    private readonly _element: HTMLElement;
     props: IComponentPropsCollection;
     propSideEffects: IPropSideEffectCollection;
     private readonly _propTypes: IPropTypes;
     private readonly _refs: IRefCollection;
     private readonly _eventHandlers: EventHandlerCollection;
 
-    constructor(element: Element, componentRegistry: ComponentRegistry) {
+    constructor(element: HTMLElement, componentRegistry: ComponentRegistry) {
         this.componentRegistry = componentRegistry;
         this._element = element;
         this.props = new ComponentProps(this);
@@ -176,5 +176,15 @@ export class Component implements IComponent {
         this._eventHandlers.push(newEventHandler);
 
         target.addEventListener(eventName, newEventHandler.boundCallback);
+    }
+
+    emit(eventName: string, payload: any, element?: HTMLElement): void {
+        const realElement = typeof element !== 'undefined' ? element : this.element;
+
+        realElement.dispatchEvent(new CustomEvent(eventName, {
+            bubbles: true,
+            cancelable: true,
+            detail: payload,
+        }));
     }
 }

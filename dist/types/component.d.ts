@@ -14,8 +14,8 @@ export declare class Component implements IComponent {
     private readonly _propTypes;
     private readonly _refs;
     private readonly _eventHandlers;
-    constructor(element: Element, componentRegistry: ComponentRegistry);
-    get element(): Element;
+    constructor(element: HTMLElement, componentRegistry: ComponentRegistry);
+    get element(): HTMLElement;
     get propTypes(): IPropTypes;
     get refs(): IRefCollection;
     get eventHandlers(): EventHandlerCollection;
@@ -32,4 +32,5 @@ export declare class Component implements IComponent {
     addPropSideEffect(propName: string, handler: SideEffectCallBack): void;
     addRef(refName: string, element: HTMLElement): void;
     addEventHandler(eventName: string, callback: EventHandlerCallback, target: HTMLElement): void;
+    emit(eventName: string, payload: any, element?: HTMLElement): void;
 }

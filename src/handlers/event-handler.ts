@@ -5,8 +5,8 @@ import { parseAttribute } from '../helpers/parse-attribute';
 import {
     getEventHandlerStrategiesFromParsedAttribute
 } from '../helpers/get-event-handler-strategies-from-parsed-attribute';
-import {getNearestComponent} from "../helpers/get-nearest-component";
-import {EventHandlerCallback} from "../types/data-on";
+import { getNearestComponent } from '../helpers/get-nearest-component';
+import { EventHandlerCallback } from '../types/data-on';
 
 export class EventHandler extends AbstractHandler implements IAttributeHandler {
     handleAttribute(attribute: string, element: HTMLElement) {
