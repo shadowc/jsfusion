@@ -5,7 +5,6 @@
 export const assertEventHandlers = (component, options) => {
     expect(component.eventHandlers.length).toBe(options.length);
 
-
     options.forEach((option) => {
         let found = false;
         for (let i = 0; i < component.eventHandlers.length; i++) {

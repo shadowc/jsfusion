@@ -14,6 +14,7 @@ import { getComponentsFromElement } from './helpers/get-components-from-element'
 import { getChildrenComponentsFromTree } from './helpers/get-children-components-from-tree';
 import { Logger } from './logger';
 import { ComponentProps } from './props';
+import { EventHandlerCallback, EventHandlerCollection} from './types/data-on';
 
 /**
  * This is the framework abstract component class.
@@ -27,6 +28,7 @@ export class Component implements IComponent {
     propSideEffects: IPropSideEffectCollection;
     private readonly _propTypes: IPropTypes;
     private readonly _refs: IRefCollection;
+    private readonly _eventHandlers: EventHandlerCollection;
 
     constructor(element: Element, componentRegistry: ComponentRegistry) {
         this.componentRegistry = componentRegistry;
@@ -34,6 +36,7 @@ export class Component implements IComponent {
         this.props = new ComponentProps(this);
         this.propSideEffects = {};
         this._refs = {};
+        this._eventHandlers = [];
         this._propTypes = this.setPropTypes();
 
         this.initializePropTypes();
@@ -49,6 +52,10 @@ export class Component implements IComponent {
 
     get refs() {
         return this._refs;
+    }
+
+    get eventHandlers() {
+        return this._eventHandlers;
     }
 
     setPropTypes() { return {}; }
@@ -156,5 +163,18 @@ export class Component implements IComponent {
         }
 
         (this._refs[refName] as HTMLElement[]).push(element);
+    }
+
+    addEventHandler(eventName: string, callback: EventHandlerCallback, target: HTMLElement): void {
+        const newEventHandler = {
+            eventName: eventName,
+            callback: callback,
+            boundCallback: callback.bind(this),
+            target: target,
+        }
+
+        this._eventHandlers.push(newEventHandler);
+
+        target.addEventListener(eventName, newEventHandler.boundCallback);
     }
 }

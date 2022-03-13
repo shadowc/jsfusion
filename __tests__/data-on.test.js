@@ -1,5 +1,5 @@
 import { Runtime } from '../dist/runtime.min';
-import CounterComponent from "./components/counter-component";
+import CounterComponent from './components/counter-component';
 import { assertEventHandlers } from './helpers/assert-event-handlers';
 
 import './helpers/mutation-observer-mock';

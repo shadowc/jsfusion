@@ -1,4 +1,5 @@
 import { ComponentRegistry } from './runtime';
+import { EventHandlerCallback, EventHandlerCollection } from './data-on';
 export interface DeferredPropValueType {
     '#parentProp': string;
 }
@@ -37,6 +38,7 @@ export interface IComponent {
     props: IComponentPropsCollection;
     propSideEffects: IPropSideEffectCollection;
     readonly propTypes: IPropTypes;
+    readonly eventHandlers: EventHandlerCollection;
     setPropTypes: () => IPropTypes;
     readonly children: IComponent[];
     readonly parent: IComponent | null;
@@ -45,6 +47,8 @@ export interface IComponent {
     createProp(propName: string, value: BasicPropValueType | BasicPropValueType[]): void;
     addPropSideEffect(propName: string, handler: SideEffectCallBack): void;
     addRef(refName: string, element: HTMLElement): void;
+    addEventHandler(eventName: string, callback: EventHandlerCallback, target: HTMLElement): void;
+    [index: string]: any;
 }
 export interface IComponentClass {
     new (element: Element, componentRegistry: ComponentRegistry): IComponent;
