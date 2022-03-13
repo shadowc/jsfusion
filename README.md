@@ -3,6 +3,13 @@
 ![Version](https://img.shields.io/badge/version-1.0.0--alpha.1-blue)
 ![Build+Jest](https://github.com/shadowc/jsfusion/actions/workflows/webpack-jest.yml/badge.svg)
 
+JsFusion is a JavaScript Framework designed to work together with technologies
+such as [@hotwired/turbo](https://github.com/hotwired/turbo) to seamlessly
+apply client functionality to HTML templates dynamically. It is greatly
+inspired on [Stimulus](https://github.com/hotwired/stimulus) (improving upon
+it) and somewhat inspired in ReactJS and VueJS (borrowed some syntax
+strategies and implementations)
+
 ## Documentation
 
 For documentation and how to use, head to the
