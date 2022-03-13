@@ -24,7 +24,6 @@ This section will be updated as development progresses.
 ### Missing features include:
 
 - Mutation Observer functionality
-- Controller `emit` function
 - Life Cycle functions
 - Plugin System for extensions (ability to parse new attributes and
 ability to react to new bind strategies)
