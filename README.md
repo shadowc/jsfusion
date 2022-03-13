@@ -1,6 +1,6 @@
 # JsFusion
 
-![Version](https://img.shields.io/badge/version-0.0.7--alpha.1-blue)
+![Version](https://img.shields.io/badge/version-1.0.0--alpha.1-blue)
 ![Build+Jest](https://github.com/shadowc/jsfusion/actions/workflows/webpack-jest.yml/badge.svg)
 
 ## Abstract
