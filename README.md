@@ -1,6 +1,6 @@
 # JsFusion
 
-![Version](https://img.shields.io/badge/version-0.0.5--alpha.2-blue)
+![Version](https://img.shields.io/badge/version-0.0.6--alpha.1-blue)
 ![Build+Jest](https://github.com/shadowc/jsfusion/actions/workflows/webpack-jest.yml/badge.svg)
 
 ## Abstract
@@ -14,12 +14,20 @@ strategies and implementations)
 
 ## Current version
 
-The current version is experimental and incomplete, and should not be used
-in a production environment. Its API and functionalities are subject to
-change and backwards compatibility is not assured at this time. Feel free
+The current version is experimental and feature complete with a few 
+exceptions (listed below). Usage in production environments should be 
+heavily monitored as it's prone to have a few bugs. Feel free
 to experiment with it and suggest features, fixes and improvements.
 
 This section will be updated as development progresses.
+
+### Missing features include:
+
+- Mutation Observer functionality
+- Controller `emit` function
+- Life Cycle functions
+- Plugin System for extensions (ability to parse new attributes and
+ability to react to new bind strategies)
 
 ## Extensibility
 
@@ -481,8 +489,3 @@ TBD.
 ### LifeCycle functions
 
 TBD.
-
-### Future development
-
-New ideas and concepts will evolve and be implemented as the framework
-matures.

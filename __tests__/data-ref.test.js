@@ -54,7 +54,7 @@ it('Should add a ref to a component that is up in the parent tree', () => {
     expect(JsFusion.componentRegistry[0].component.refs.counter).toEqual(element);
 });
 
-it('Should add several refs to the same name and be accesible', () => {
+it('Should add several refs to the same name and be accessible.', () => {
     JsFusion.registerComponent('counter', CounterComponent);
 
     document.body.innerHTML = `

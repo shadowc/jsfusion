@@ -9,4 +9,18 @@ export default class extends Component {
             },
         };
     }
+
+    /**
+     * @param {MouseEvent} event
+     */
+    handleClick(event) {
+        this.props.counter++;
+    }
+
+    /**
+     * @param {MouseEvent} event
+     */
+    dummyEventHandler(event) {
+        // NOOP
+    }
 }

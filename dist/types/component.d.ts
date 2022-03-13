@@ -1,5 +1,6 @@
 import { IComponentPropsCollection, IComponent, IPropTypes, IComponentCollection, BasicPropValueType, SideEffectCallBack, IPropSideEffectCollection, IRefCollection } from './types/component';
 import { ComponentRegistry } from './types/runtime';
+import { EventHandlerCallback, EventHandlerCollection } from './types/data-on';
 /**
  * This is the framework abstract component class.
  *
@@ -12,10 +13,12 @@ export declare class Component implements IComponent {
     propSideEffects: IPropSideEffectCollection;
     private readonly _propTypes;
     private readonly _refs;
+    private readonly _eventHandlers;
     constructor(element: Element, componentRegistry: ComponentRegistry);
     get element(): Element;
     get propTypes(): IPropTypes;
     get refs(): IRefCollection;
+    get eventHandlers(): EventHandlerCollection;
     setPropTypes(): {};
     /**
      * Initializes PropTypes for the Component when Props have
@@ -28,4 +31,5 @@ export declare class Component implements IComponent {
     createProp(propName: string, value: BasicPropValueType | BasicPropValueType[]): void;
     addPropSideEffect(propName: string, handler: SideEffectCallBack): void;
     addRef(refName: string, element: HTMLElement): void;
+    addEventHandler(eventName: string, callback: EventHandlerCallback, target: HTMLElement): void;
 }
