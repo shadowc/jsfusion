@@ -33,7 +33,7 @@ export type SideEffectCallBack = (propValue: BasicPropValueType | BasicPropValue
 export type IPropSideEffectCollection = {[propName: string]: SideEffectCallBack[]};
 
 export interface IComponent {
-    readonly element: Element;
+    readonly element: HTMLElement;
     props: IComponentPropsCollection;
     propSideEffects: IPropSideEffectCollection;
     readonly propTypes: IPropTypes;
@@ -50,6 +50,7 @@ export interface IComponent {
     addPropSideEffect(propName: string, handler: SideEffectCallBack): void;
     addRef(refName: string, element: HTMLElement): void;
     addEventHandler(eventName: string, callback: EventHandlerCallback, target: HTMLElement): void;
+    emit(eventName: string, payload: any, element?: HTMLElement): void;
 
     [index: string]: any;
 }

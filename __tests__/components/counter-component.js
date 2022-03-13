@@ -23,4 +23,18 @@ export default class extends Component {
     dummyEventHandler(event) {
         // NOOP
     }
+
+    emitCustomEvent() {
+        this.emit('customEvent', { legend: 'my custom event' });
+    }
+
+    emitCustomEventFromButton() {
+        this.emit('customEvent', { legend: 'my custom event' }, this.element.querySelector('button'));
+    }
+
+    handleCustomEvent(event) {
+        const div = document.createElement('div');
+        div.innerHTML = `<div id="addedElement">${event.detail.legend}</div>`;
+        document.body.appendChild(div);
+    }
 }
