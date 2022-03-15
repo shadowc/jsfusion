@@ -5,7 +5,7 @@ e Component. They include:
 
 - `onCreated()` - Called when a component has been detected in the DOM and
 instantiated.
-- `onPropChanged(oldProps, newProps)` - Called when the props in a component
+- `onPropChanged(oldProps, newProps, propName)` - Called when the props in a component
 are changed as a result of modifying the DOM or by programmatically 
 changing them.
 - `onDestroyed()` - Called when the DOM structure of a component has been
