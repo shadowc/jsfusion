@@ -1,6 +1,6 @@
 import { ObservableAttributes } from './observable-attributes';
 import { ComponentCollection, ComponentRegistry, IRuntime } from './types/runtime';
-import { IComponentClass } from './types/component';
+import { IComponentClass, IComponent } from './types/component';
 import { DataBindStrategies } from './data-bind-strategies';
 export { Component } from './component';
 /**
@@ -14,9 +14,12 @@ export declare class Runtime implements IRuntime {
     componentRegistry: ComponentRegistry;
     components: ComponentCollection;
     dataBindHandlers: DataBindStrategies;
+    createdComponentsQueue: IComponent[];
     constructor();
     mutationObserverHandler(mutationList: MutationRecord[]): void;
     start(): void;
     registerComponent(componentName: string, component: IComponentClass): void;
     registerComponentElement(componentName: string, element: Element): void;
+    private flushCreatedComponentQueue;
+    destroyComponentRegistry(index: number): void;
 }

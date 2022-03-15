@@ -13,7 +13,7 @@ export declare type DOMPropComplexDefinition = {
 };
 export interface IComponentPropsCollection extends DOMComponentProps {
     addProp: (propName: string, value: BasicPropValueType | BasicPropValueType[]) => void;
-    handleSideEffects: (propName: string) => void;
+    handleSideEffects: (propName: string, oldProps: DOMComponentProps) => void;
 }
 export interface PropType {
     type: BasicPropType | Array<BasicPropType>;
@@ -49,6 +49,9 @@ export interface IComponent {
     addRef(refName: string, element: HTMLElement): void;
     addEventHandler(eventName: string, callback: EventHandlerCallback, target: HTMLElement): void;
     emit(eventName: string, payload: any, element?: HTMLElement): void;
+    onCreated(): void;
+    onPropChanged(oldProps: DOMComponentProps, newProps: DOMComponentProps, propName: string): void;
+    onDestroyed(): void;
     [index: string]: any;
 }
 export interface IComponentClass {

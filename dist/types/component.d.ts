@@ -1,4 +1,4 @@
-import { IComponentPropsCollection, IComponent, IPropTypes, IComponentCollection, BasicPropValueType, SideEffectCallBack, IPropSideEffectCollection, IRefCollection } from './types/component';
+import { IComponentPropsCollection, IComponent, IPropTypes, IComponentCollection, BasicPropValueType, SideEffectCallBack, IPropSideEffectCollection, IRefCollection, DOMComponentProps } from './types/component';
 import { ComponentRegistry } from './types/runtime';
 import { EventHandlerCallback, EventHandlerCollection } from './types/data-on';
 /**
@@ -20,6 +20,9 @@ export declare class Component implements IComponent {
     get refs(): IRefCollection;
     get eventHandlers(): EventHandlerCollection;
     setPropTypes(): {};
+    onCreated(): void;
+    onPropChanged(oldProps: DOMComponentProps, newProps: DOMComponentProps, propName: string): void;
+    onDestroyed(): void;
     /**
      * Initializes PropTypes for the Component when Props have
      * default values.

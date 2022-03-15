@@ -7,6 +7,7 @@ import {
     SideEffectCallBack,
     IPropSideEffectCollection,
     IRefCollection,
+    DOMComponentProps,
 } from './types/component';
 
 import { ComponentRegistry } from './types/runtime';
@@ -59,6 +60,9 @@ export class Component implements IComponent {
     }
 
     setPropTypes() { return {}; }
+    onCreated() {}
+    onPropChanged(oldProps: DOMComponentProps, newProps: DOMComponentProps, propName: string) {}
+    onDestroyed() {}
 
     /**
      * Initializes PropTypes for the Component when Props have
