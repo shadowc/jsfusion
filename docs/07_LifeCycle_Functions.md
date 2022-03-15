@@ -13,4 +13,4 @@ removed from DOM and the component needs to clean up.
 
 > 1.0: `onPropChanged` won't be called under certain circumstances due to
 > the mutation observer not being yet implemented. `onDestroyed` is not
-> yet implemented.
+> yet implemented as a result of removing elements from DOM.
