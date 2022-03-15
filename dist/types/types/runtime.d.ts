@@ -16,8 +16,10 @@ export interface IRuntime {
     componentRegistry: ComponentRegistry;
     components: ComponentCollection;
     dataBindHandlers: IDataBindHandlerCollection;
+    createdComponentsQueue: IComponent[];
     mutationObserverHandler: (mutationList: MutationRecord[]) => void;
     start: () => void;
     registerComponent: (componentName: string, component: IComponentClass) => void;
     registerComponentElement: (componentName: string, element: Element) => void;
+    destroyComponentRegistry: (index: number) => void;
 }

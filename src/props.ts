@@ -3,6 +3,7 @@ import {
     IComponentPropsCollection,
     IComponent,
     DeferredPropValueType,
+    DOMComponentProps,
 } from './types/component';
 import { isValidPropType } from './helpers/is-valid-prop-type';
 import { isDeferredPropType } from './helpers/is-deferred-prop-type';
@@ -47,6 +48,8 @@ export class ComponentProps implements IComponentPropsCollection {
             },
 
             set: (value: BasicPropValueType | BasicPropValueType[]) => {
+                const oldProps = this.getPropValues();
+
                 if (this._component.propTypes[propName] === null) {
                     Logger.error(`Attempting to assign property ${propName} but it wasn't defined in propTypes. Did you forget to redefine setPropTypes() in your controller and make it return an object?`);
                     throw 'Attempting to set a non defined prop';
@@ -67,7 +70,7 @@ export class ComponentProps implements IComponentPropsCollection {
                     }
 
                     this._valueMap[propName] = value;
-                    this.handleSideEffects(propName);
+                    this.handleSideEffects(propName, oldProps);
                 } else {
                     if (isDeferredPropType(this._valueMap[propName])) {
                         const parentCmp = getParentForDeferredProp(this._component, this._valueMap[propName]);
@@ -78,10 +81,10 @@ export class ComponentProps implements IComponentPropsCollection {
                         }
 
                         parentCmp.props[getPropNameForDeferredProp(this._valueMap[propName]) as string] = value;
-                        this.handleSideEffects(propName);
+                        this.handleSideEffects(propName, oldProps);
                     } else {
                         this._valueMap[propName] = value;
-                        this.handleSideEffects(propName);
+                        this.handleSideEffects(propName, oldProps);
                     }
                 }
             }
@@ -91,7 +94,10 @@ export class ComponentProps implements IComponentPropsCollection {
         this[propName] = value;
     }
 
-    handleSideEffects(propName: string): void {
+    handleSideEffects(propName: string, oldProps: DOMComponentProps): void {
+        const newProps = this.getPropValues();
+        this._component.onPropChanged(oldProps, newProps, propName);
+
         if (typeof this._component.propSideEffects[propName] !== 'undefined') {
             this._component.propSideEffects[propName].forEach((callback) => {
                 callback(this[propName]);
@@ -102,8 +108,18 @@ export class ComponentProps implements IComponentPropsCollection {
         this._component.children.forEach((childComponent) => {
             const childProp = childComponent.props[propName];
             if (typeof childProp !== 'undefined') {
-                childComponent.props.handleSideEffects(propName);
+                childComponent.props.handleSideEffects(propName, oldProps);
             }
         });
+    }
+
+    private getPropValues(): DOMComponentProps {
+        const propObject: DOMComponentProps = {};
+
+        Object.keys(this._component.propTypes).forEach((propName) => {
+            propObject[propName] = this[propName];
+        });
+
+        return propObject;
     }
 }

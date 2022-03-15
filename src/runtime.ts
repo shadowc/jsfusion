@@ -1,6 +1,6 @@
 import { ObservableAttributes } from './observable-attributes';
 import { ComponentCollection, ComponentRegistry, IRuntime } from './types/runtime';
-import { IComponentClass } from './types/component';
+import { IComponentClass, IComponent } from './types/component';
 import { ComponentHandler } from './handlers/component-handler';
 import { PropsHandler } from './handlers/props-handler';
 import { BindHandler } from './handlers/bind-handler';
@@ -25,6 +25,7 @@ export class Runtime implements IRuntime {
     componentRegistry: ComponentRegistry;
     components: ComponentCollection;
     dataBindHandlers: DataBindStrategies;
+    createdComponentsQueue: IComponent[];
 
     constructor() {
         this.version = APP_VERSION;
@@ -33,6 +34,7 @@ export class Runtime implements IRuntime {
         this.mutationObserver = new MutationObserver(this.mutationObserverHandler.bind(this));
         this.observableAttributes = new ObservableAttributes();
         this.dataBindHandlers = new DataBindStrategies();
+        this.createdComponentsQueue = [];
 
         // Register the conventional attribute handlers
         this.observableAttributes.registerAttributeHandler(
@@ -98,6 +100,8 @@ export class Runtime implements IRuntime {
             childList: true,
             subtree: true,
         });
+
+        this.flushCreatedComponentQueue();
     }
 
     registerComponent(componentName: string, component: IComponentClass) {
@@ -130,5 +134,28 @@ export class Runtime implements IRuntime {
             component: new componentClass(element, this.componentRegistry),
             node: element,
         });
+
+        // Push newly created component into the queue to call onCreated once the entire DOM has been parsed.
+        this.createdComponentsQueue.push(this.componentRegistry[this.componentRegistry.length - 1].component);
+    }
+
+    private flushCreatedComponentQueue() {
+        while (this.createdComponentsQueue.length) {
+            const component = this.createdComponentsQueue.pop();
+            (component as IComponent).onCreated();
+        }
+    }
+    
+    destroyComponentRegistry(index: number) {
+        // TODO: Implement full gc process (is this enough?)
+        if (index >= 0 && index < this.componentRegistry.length) {
+            this.componentRegistry[index].component.onDestroyed();
+
+            this.componentRegistry[index].component.eventHandlers.forEach((handler) => {
+                handler.target.removeEventListener(handler.eventName, handler.boundCallback);
+            });
+
+            this.componentRegistry.splice(index, 1);
+        }
     }
 }
