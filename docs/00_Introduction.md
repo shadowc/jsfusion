@@ -1,26 +1,30 @@
-# JsFusion
+# Introduction
 
-JsFusion is a JavaScript Framework designed to work together with technologies
+`JsFusion` is a JavaScript Framework designed to work together with technologies
 such as [@hotwired/turbo](https://github.com/hotwired/turbo) to seamlessly
 apply client functionality to HTML templates dynamically. It is greatly
 inspired on [Stimulus](https://github.com/hotwired/stimulus) (improving upon
 it) and somewhat inspired in ReactJS and VueJS (borrowed some syntax
-strategies and implementations)
+strategies and features).
 
 ## Current version
 
 The current version is experimental and feature complete with a few
 exceptions (listed below). Usage in production environments should be
 heavily monitored as it's prone to have a few bugs. Feel free
-to experiment with it and suggest features, fixes and improvements.
+to experiment with it and suggest features, fixes and improvements on
+our [issues](https://github.com/shadowc/jsfusion/issues) page.
+
+Bug fixing pull requests are also greatly appreciated!
 
 This section will be updated as development progresses.
 
 ### Missing features include:
 
-- Mutation Observer functionality
+- Mutation Observer functionality.
+- Alternative syntax for props.
 - Plugin System for extensions (ability to parse new attributes and
-  ability to react to new bind strategies)
+  ability to react to new bind strategies).
 
 ## Extensibility
 

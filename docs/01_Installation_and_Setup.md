@@ -1,6 +1,6 @@
 # Installation and Setup
 
-To use JsFusion you should install this via npm packages:
+To use `JsFusion` you should install this via npm packages:
 
 `npm install jsfusion`;
 
@@ -11,7 +11,6 @@ or
 And use it in your main `app.js` file (or the file that is loaded by every
 page in your site) by importing its runtime:
 
-`JavaScript`
 ```javascript
 import { Runtime } from 'jsfusion';
 // Import your jsfusion components here
@@ -27,6 +26,6 @@ JsFusion.registerComponent('counter', Counter);
 JsFusion.start();
 ```
 
-That is all you need! Now JsFusion will look through your DOM structure and
+That is all you need! Now `JsFusion` will look through your DOM structure and
 observe changes to it (much like Stimulus) to instantiate and manage the
 different Components on your page.

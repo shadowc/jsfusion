@@ -8,7 +8,7 @@ such as [@hotwired/turbo](https://github.com/hotwired/turbo) to seamlessly
 apply client functionality to HTML templates dynamically. It is greatly
 inspired on [Stimulus](https://github.com/hotwired/stimulus) (improving upon
 it) and somewhat inspired in ReactJS and VueJS (borrowed some syntax
-strategies and implementations)
+strategies and features).
 
 ## Documentation
 
@@ -26,3 +26,10 @@ Or browse these files on GitHub:
 - [Event Handling](docs/06_Event_Handling.md)
 - [LifeCycle Functions](docs/07_LifeCycle_Functions.md)
 - [Extending the Framework with New Functionality](docs/08_Extending_the_Framework_with_New_Functionality.md)
+
+## Contribute
+
+You can contribute by reporting issues or leaving feedback on our
+[issues](https://github.com/shadowc/jsfusion/issues) page.
+
+Bug fixing pull requests are also greatly appreciated!

@@ -6,20 +6,17 @@ function that handles it.
 
 The syntax is as follows:
 
-`HTML`
 ```html
 <div data-on="<event>:<component>.<handler>"></div>
 ```
 
 You can specify multiple event handlers to one element, again by separating
-them with spaces or providing the proper json array of strings.
+them with spaces or providing the proper `json` array of strings.
 
-`HTML`
 ```html
 <div data-on="click:counter.handleClick mouseup:otherComponent.handleMouseUp"></div>
 ```
 
-`HTML`
 ```html
 <div data-on='[
     "click:counter.handleClick",
@@ -29,7 +26,6 @@ them with spaces or providing the proper json array of strings.
 
 Once parsed, these callbacks will be called when the event occurs.
 
-`JavaScript`
 ```javascript
 export default class extends Component {
     /**
@@ -46,11 +42,10 @@ export default class extends Component {
 
 ## Emitting your own custom events from a controller
 
-If you need to emit a custom event to be caught from an element or
+If you need to emit a custom event to be caught from a DOM element or
 a controller upward in the tree, you can use the handy `emit` function
 shortcut:
 
-`JavaScript`
 ```javascript
 export default class extends Component {
     myFunc() {
@@ -59,14 +54,14 @@ export default class extends Component {
 }
 ```
 
-This will emit a custom event called `myCustomEvent' from the `this.element`
-HTMLElement. Alternatively, you can pass another Element to fire the event
-from (you may be catching from within the same controller:
+This will emit a custom event called `myCustomEvent` from the `this.element`
+`HTMLElement`. Alternatively, you can pass another Element to fire the event
+from (you may be catching from within the same controller):
 
-`JavaScript`
 ```javascript
 export default class extends Component {
     myFunc() {
+        // emit this event from a different element
         this.emit('myCustomEvent', {
                 payload: 'anything here' 
             },
@@ -78,7 +73,6 @@ export default class extends Component {
 
 You can then conveniently catch these events using a `data-on` attribute:
 
-`html`
 ```html
 <div data-component="myComponent">
     <div data-on="myCustomEvent:myComponent.customEventHandler">
@@ -88,7 +82,7 @@ You can then conveniently catch these events using a `data-on` attribute:
             
             The payload, will be inside the event.detail property.
             
-            See: https://developer.mozilla.org/en-US/docs/Web/Events/Creating_and_triggering_events
+            (See: https://developer.mozilla.org/en-US/docs/Web/Events/Creating_and_triggering_events)
         -->
     </div>
 </div>
