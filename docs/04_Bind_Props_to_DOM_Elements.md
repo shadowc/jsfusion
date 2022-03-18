@@ -2,27 +2,24 @@
 
 After you have defined and initialized a prop, you can bind it to different
 elements of the DOM by using the special `data-bind` attribute. After
-parsing this attribute, whenever any of the props mentioned change, its
+parsing this attribute, whenever any of the props involved change, its
 effects will be rendered immediately.
 
 The syntax for `data-bind` is as follows:
 
-`HTML`
 ```html
 <div data-bind="<strategy>:<component>.<prop>"></div>
 ```
 
 You can specify multiple bindings by separating them with spaces or
-providing them in a json array of strings notation, but notice that
+providing them in a `json` Array of strings, but notice that
 as of right now, with only one binding strategy, they will conflict with
 each other.
 
-`HTML`
 ```html
 <div data-bind="text:counter.count text:otherComponent.myProp"></div>
 ```
 
-`HTML`
 ```html
 <div data-bind='[ 
     "text:counter.count", 
@@ -32,10 +29,9 @@ each other.
 
 ## `data-bind text`
 
-The most simple bind strategy is "text", where the `innerText` property
-of the HTML Element will be synced with the value of the property referred.
+The simplest bind strategy is "text", where the `innerText` property
+of the DOM element will be synced with the value of the property referred to.
 
-`HTML`
 ```html
 <div data-component="counter" data-props='{ "count": 0 }'>
     <span data-bind="text:counter.count"></span>
