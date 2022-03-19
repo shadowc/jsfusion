@@ -63,7 +63,28 @@ export default class Counter extends Component {
 
 ## Defining props
 
-To pass props to a component, you just need to use Json to provide a
+To pass props to a component, you can use the following syntax:
+
+```html
+<div data-component="counter" data-props="[<componentName>.<propName>: <propValue>[, <otherPropsSeparatedByComas>]"></div>
+```
+
+For example, to set the `count` property of the `counter` component to `0` you
+can either just define it like this:
+
+```html
+<div data-component="counter" data-props="count: 0"></div>
+```
+
+...since there's only one component defined at the DOM Element, or like this:
+
+```html
+<div data-component="counter" data-props="counter.count: 0"></div>
+```
+
+Useful for defining props on elements that have many components defined.
+
+Alternatively, you can just use `json` notation to provide a
 collection of key/value pairs with the desired values:
 
 ```html
@@ -73,7 +94,7 @@ collection of key/value pairs with the desired values:
 ## Multiple component props definition
 
 To provide props for multiple Components, the syntax becomes a bit more
-complex:
+complex when using `json`:
 
 ```html
 <div data-component="counter otherComponent" data-props='{
@@ -81,6 +102,25 @@ complex:
     "otherComponent": { "myValue": "Hello World!" },
 }'></div>
 ```
+
+You can use the string format like this:
+
+```html
+<div 
+    data-component="counter otherComponent" 
+    data-props="counter.count: 0, otherComponent.myValue: Hello World!"
+></div>
+```
+
+You can also use `json` to define special values in string formatted props,
+for example, when assigning a number literal to a prop of type `string`:
+
+```html
+<div data-component="myComponent" data-props='myComponent.stringProp: "0"'></div>
+```
+
+> Anything in the `<value>` portion that cannot be parsed using `JSON.parse`
+> will be processed as a string literal.
 
 ## Deferred Props
 
@@ -98,6 +138,16 @@ eliciting side effects there.
 </div>
 ```
 
+With string syntax:
+
+````html
+<div data-component="otherComponent" data-props="mainCount: 0">
+    <label>Here is a counter:</label>
+
+    <span data-component="counter" data-props="count: #parentProp.mainCount"></span>
+</div>
+````
+
 You can define the component that should be passing down the prop by
 specifying the parent name:
 
@@ -109,6 +159,22 @@ specifying the parent name:
     <label>Here is a counter:</label>
 
     <span data-component="counter" data-props='{ "count": { "#parentProp": "parentComponent.mainCount" } }'></span>
+</div>
+```
+
+And again using string syntax:
+
+```html
+<div 
+    data-component="parentComponent otherComponent" 
+    data-props="parentComponent.mainCount: 0, otherComponent.mainCount: 1"
+>
+    <label>Here is a counter:</label>
+
+    <span 
+        data-component="counter" 
+        data-props="count: #parentProp.parentComponent.mainCount"
+    ></span>
 </div>
 ```
 
@@ -131,9 +197,9 @@ specifying the parent name:
 
 ## Using Twig to pass down props
 
-Finally, since props are passed using `json` notation, you can easily
-pass objects created in your Symfony controller, for example, when 
-using `Twig` as a templating engine:
+Finally, since props (and any other attributes) can be passed using `json`
+notation, you can easily pass objects created in your Symfony controller, 
+for example, when using `Twig` as a templating engine:
 
 ```twig
 <div data-component="otherComponent" data-props="{{ myPropsObject|json|e('html_attr') }}">
