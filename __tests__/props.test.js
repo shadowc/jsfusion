@@ -255,6 +255,30 @@ it('Can set the component props to one of 2 parent components props', () => {
     expect(parentComponent.props.counter).toBe(2);
 });
 
+it('Can set the component props to one of 2 parent components props with string syntax', () => {
+    JsFusion.registerComponent('basicComponent', ComponentRequiredPropType);
+    JsFusion.registerComponent('parentComponent', ComponentRequiredPropType);
+    JsFusion.registerComponent('childComponent', ComponentRequiredPropType);
+
+    document.body.innerHTML = `
+<div id="basicComponent" data-component="basicComponent parentComponent" data-props="basicComponent.counter: 5, parentComponent.counter: 4">
+    <div id="childComponent" data-component="childComponent" data-props="counter: #parentProp.parentComponent.counter"></div>
+</div>`;
+
+    JsFusion.start();
+
+    const basicComponent = JsFusion.componentRegistry[0].component;
+    const parentComponent = JsFusion.componentRegistry[1].component;
+    const childComponent = JsFusion.componentRegistry[2].component;
+
+    expect(childComponent.props.counter).toBe(4);
+
+    childComponent.props.counter = 2;
+
+    expect(basicComponent.props.counter).toBe(5);
+    expect(parentComponent.props.counter).toBe(2);
+});
+
 it('Errors when we set a deferred prop with a component with no parent', () => {
     JsFusion.registerComponent('parentComponent', ComponentRequiredPropType);
 
