@@ -2,6 +2,7 @@
 
 ![Version](https://img.shields.io/badge/version-1.0.0--alpha.2-blue)
 ![Build+Jest](https://github.com/shadowc/jsfusion/actions/workflows/webpack-jest.yml/badge.svg)
+![CodeQL](https://github.com/shadowc/jsfusion/actions/workflows/codeql-analysis.yml/badge.svg)
 
 JsFusion is a JavaScript Framework designed to work together with technologies
 such as [@hotwired/turbo](https://github.com/hotwired/turbo) to seamlessly
