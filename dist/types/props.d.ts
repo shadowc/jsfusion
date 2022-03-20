@@ -5,6 +5,10 @@ export declare class ComponentProps implements IComponentPropsCollection {
     private readonly _component;
     constructor(component: IComponent);
     addProp(propName: string, value: BasicPropValueType | BasicPropValueType[]): void;
-    handleSideEffects(propName: string, oldProps: DOMComponentProps): void;
+    handleSideEffects(propName: string, oldProps: DOMComponentProps | null): void;
     private getPropValues;
+    /**
+     * Updates the props attribute in the DOM Element that hosts this component
+     */
+    private updatePropsAttribute;
 }

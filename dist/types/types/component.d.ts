@@ -13,7 +13,7 @@ export declare type DOMPropComplexDefinition = {
 };
 export interface IComponentPropsCollection extends DOMComponentProps {
     addProp: (propName: string, value: BasicPropValueType | BasicPropValueType[]) => void;
-    handleSideEffects: (propName: string, oldProps: DOMComponentProps) => void;
+    handleSideEffects: (propName: string, oldProps: DOMComponentProps | null) => void;
 }
 export interface PropType {
     type: BasicPropType | Array<BasicPropType>;
@@ -44,16 +44,17 @@ export interface IComponent {
     readonly parent: IComponent | null;
     readonly parents: IComponentCollection | null;
     readonly refs: IRefCollection;
+    readonly componentName: string;
     createProp(propName: string, value: BasicPropValueType | BasicPropValueType[]): void;
     addPropSideEffect(propName: string, handler: SideEffectCallBack): void;
     addRef(refName: string, element: HTMLElement): void;
     addEventHandler(eventName: string, callback: EventHandlerCallback, target: HTMLElement): void;
     emit(eventName: string, payload: any, element?: HTMLElement): void;
     onCreated(): void;
-    onPropChanged(oldProps: DOMComponentProps, newProps: DOMComponentProps, propName: string): void;
+    onPropChanged(oldProps: DOMComponentProps | null, newProps: DOMComponentProps, propName: string): void;
     onDestroyed(): void;
     [index: string]: any;
 }
 export interface IComponentClass {
-    new (element: Element, componentRegistry: ComponentRegistry): IComponent;
+    new (element: Element, componentRegistry: ComponentRegistry, name: string): IComponent;
 }

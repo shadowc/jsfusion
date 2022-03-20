@@ -17,7 +17,7 @@ export default class extends Component {
     }
 
     onPropChanged(oldProps, newProps, propName) {
-        if (oldProps.hello) {
+        if (oldProps) {
             const div = document.createElement('div');
             div.innerHTML = `<div id="on-prop-changed">${oldProps.hello} - ${newProps.hello} - ${propName}</div>`;
             document.body.appendChild(div);

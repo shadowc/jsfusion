@@ -14,14 +14,16 @@ export declare class Component implements IComponent {
     private readonly _propTypes;
     private readonly _refs;
     private readonly _eventHandlers;
-    constructor(element: HTMLElement, componentRegistry: ComponentRegistry);
+    private readonly _componentName;
+    constructor(element: HTMLElement, componentRegistry: ComponentRegistry, name: string);
     get element(): HTMLElement;
     get propTypes(): IPropTypes;
     get refs(): IRefCollection;
     get eventHandlers(): EventHandlerCollection;
+    get componentName(): string;
     setPropTypes(): {};
     onCreated(): void;
-    onPropChanged(oldProps: DOMComponentProps, newProps: DOMComponentProps, propName: string): void;
+    onPropChanged(oldProps: DOMComponentProps, newProps: DOMComponentProps | null, propName: string): void;
     onDestroyed(): void;
     /**
      * Initializes PropTypes for the Component when Props have
