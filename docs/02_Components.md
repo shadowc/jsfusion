@@ -61,6 +61,10 @@ separating them with spaces:
 <div data-component='["counter", "otherComponent"]'></div>
 ```
 
+> When a component is instantiated, `JsFusion` gives the assigned
+> component name to its instance. You can always check this by reading
+> the getter `this.componentName`
+
 ## Component children
 
 You can have children components inside your Component structure,
