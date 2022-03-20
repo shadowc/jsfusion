@@ -8,11 +8,16 @@ import { EventHandler } from './handlers/event-handler';
 import { RefHandler } from './handlers/ref-handler';
 import { Logger } from './logger';
 import { DataBindStrategies } from './data-bind-strategies';
-import {TextDataBinder} from "./bind-strategies/text-data-binder";
+import { TextDataBinder } from './bind-strategies/text-data-binder';
+import { IAttributeHandler } from './types/attribute-handler';
+import { IBindStrategyHandler } from './types/data-bind';
 
 declare var APP_VERSION: string;
 
 export { Component } from './component';
+export { AbstractHandler} from './handlers/abstract-handler';
+export { getNearestComponent } from './helpers/get-nearest-component';
+export { parseAttribute } from './helpers/parse-attribute';
 
 /**
  * Main JsFusion framework runtime file. This is to be executed in every page load
@@ -37,37 +42,14 @@ export class Runtime implements IRuntime {
         this.createdComponentsQueue = [];
 
         // Register the conventional attribute handlers
-        this.observableAttributes.registerAttributeHandler(
-            'data-component',
-            new ComponentHandler(this),
-        );
+        this.registerAttributeHandler('data-component', new ComponentHandler(this));
+        this.registerAttributeHandler('data-props', new PropsHandler(this));
+        this.registerAttributeHandler('data-bind', new BindHandler(this));
+        this.registerAttributeHandler('data-on', new EventHandler(this));
+        this.registerAttributeHandler('data-ref', new RefHandler(this));
 
-        this.observableAttributes.registerAttributeHandler(
-            'data-props',
-            new PropsHandler(this),
-        );
-
-        this.observableAttributes.registerAttributeHandler(
-            'data-bind',
-            new BindHandler(this),
-        );
-
-        this.observableAttributes.registerAttributeHandler(
-            'data-on',
-            new EventHandler(this),
-        );
-
-        this.observableAttributes.registerAttributeHandler(
-            'data-ref',
-            new RefHandler(this),
-        );
-
-        this.dataBindHandlers.registerDataBindStrategy(
-            'text',
-            new TextDataBinder(),
-        );
-
-        // TODO: This is the place for adding plugins that register new handlers
+        // Register the basic data bind strategies
+        this.registerDataBindStrategy('text', new TextDataBinder());
     }
 
     mutationObserverHandler(mutationList: MutationRecord[]) {
@@ -157,5 +139,13 @@ export class Runtime implements IRuntime {
 
             this.componentRegistry.splice(index, 1);
         }
+    }
+
+    registerAttributeHandler(attributeName: string, handler: IAttributeHandler): void {
+        this.observableAttributes.registerAttributeHandler(attributeName, handler);
+    }
+
+    registerDataBindStrategy(strategyName: string, handler: IBindStrategyHandler): void {
+        this.dataBindHandlers.registerDataBindStrategy(strategyName, handler);
     }
 }

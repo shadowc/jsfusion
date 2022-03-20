@@ -21,7 +21,7 @@ export class PropsHandler extends AbstractHandler implements IAttributeHandler {
         const componentProps = getPropsFromParsedAttribute(parseAttribute(element, attribute, true), componentNames);
 
         // Parse component props according to propTypes
-        const localRegistry = getComponentsFromElement(element, this.parent.componentRegistry);
+        const localRegistry = getComponentsFromElement(element, this.runtime.componentRegistry);
         localRegistry.forEach((compRecord) => {
             const compProps = componentProps[compRecord.name];
 

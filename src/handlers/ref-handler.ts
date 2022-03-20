@@ -13,7 +13,7 @@ export class RefHandler extends AbstractHandler implements IAttributeHandler {
             Logger.log(`Attempting to bind a ref on "${refStrategy.componentName}.${refStrategy.refName}".`);
 
             // Find the right component
-            const component = getNearestComponent(element, refStrategy.componentName, this.parent);
+            const component = getNearestComponent(element, refStrategy.componentName, this.runtime);
 
             if (component === null) {
                 Logger.log(`Error trying to find component "${refStrategy.componentName}" for data ref. Have you misspelled the component name?`);
