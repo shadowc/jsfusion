@@ -112,7 +112,7 @@ class MyHandler extends AbstractHandler {
 
 JsFusion.registerAttributeHandler('data-hearts', new MyHandler(JsFusion));
 
-// ... Registe your components here
+// ... Register your components here
 
 JsFusion.start();
 ```
