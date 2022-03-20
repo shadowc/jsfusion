@@ -61,6 +61,11 @@ export default class Counter extends Component {
 }
 ```
 
+> `JsFusion` will do its best to keep DOM element attributes in sync with
+> the information in the component's props collection, so that when you
+> change a prop from JavaScript, the DOM element's `data-props` attribute
+> also changes to reflect that update.
+
 ## Defining props
 
 To pass props to a component, you can use the following syntax:

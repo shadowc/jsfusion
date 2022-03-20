@@ -1,6 +1,7 @@
 import { DOMPropComplexDefinition, DOMComponentProps } from '../types/component';
 import { Logger } from '../logger';
-import {isDeferredPropType} from "./is-deferred-prop-type";
+import { isDeferredPropType } from './is-deferred-prop-type';
+import { getPropParsingRegex } from './get-prop-parsing-regex';
 
 export const getPropsFromParsedAttribute = (
     parsedAttribute: string|boolean|number|object|Array<any>,
@@ -49,7 +50,7 @@ export const getPropsFromParsedAttribute = (
             throw 'Syntax error data-prop.';
         }
 
-        const matches = word.trim().match(/^((.+)\.)?(.+):\s*(#parentProp\.)?(.+),?$/);
+        const matches = word.trim().match(getPropParsingRegex());
 
         if (matches === null) {
             Logger.error('Invalid syntax when trying to parse a data-prop strategy', word);

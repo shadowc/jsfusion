@@ -10,6 +10,7 @@ import { isDeferredPropType } from './helpers/is-deferred-prop-type';
 import { Logger } from './logger';
 import { getParentForDeferredProp } from './helpers/get-parent-for-deferred-prop';
 import { getPropNameForDeferredProp } from './helpers/get-prop-name-for-deferred-prop';
+import { getPropParsingRegex } from './helpers/get-prop-parsing-regex';
 
 export class ComponentProps implements IComponentPropsCollection {
     [index: string]: BasicPropValueType | BasicPropValueType[];
@@ -71,6 +72,7 @@ export class ComponentProps implements IComponentPropsCollection {
 
                     this._valueMap[propName] = value;
                     this.handleSideEffects(propName, oldProps);
+                    this.updatePropsAttribute(propName);
                 } else {
                     if (isDeferredPropType(this._valueMap[propName])) {
                         const parentCmp = getParentForDeferredProp(this._component, this._valueMap[propName]);
@@ -85,16 +87,18 @@ export class ComponentProps implements IComponentPropsCollection {
                     } else {
                         this._valueMap[propName] = value;
                         this.handleSideEffects(propName, oldProps);
+                        this.updatePropsAttribute(propName);
                     }
                 }
             }
         });
 
         // Actually set the value with side effects at creation
-        this[propName] = value;
+        this._valueMap[propName] = value;
+        this.handleSideEffects(propName, null);
     }
 
-    handleSideEffects(propName: string, oldProps: DOMComponentProps): void {
+    handleSideEffects(propName: string, oldProps: DOMComponentProps|null): void {
         const newProps = this.getPropValues();
         this._component.onPropChanged(oldProps, newProps, propName);
 
@@ -121,5 +125,78 @@ export class ComponentProps implements IComponentPropsCollection {
         });
 
         return propObject;
+    }
+
+    /**
+     * Updates the props attribute in the DOM Element that hosts this component
+     */
+    private updatePropsAttribute(propName: string): void {
+        const attributeValue = this._component.element.getAttribute('data-props');
+
+        if (!attributeValue) {
+            return;
+        }
+
+        const componentName = this._component.componentName;
+
+        // First, try with JSON format
+        try {
+            const propObject = JSON.parse(attributeValue);
+
+            // ignore deferred props in prop defined inside componentName object
+            if (
+                typeof propObject[componentName] !== 'undefined'
+                && typeof propObject[componentName][propName] !== 'undefined'
+            ) {
+                if (isDeferredPropType(propObject[componentName][propName])) {
+                    return;
+                }
+
+                propObject[componentName][propName] = this._valueMap[propName];
+                this._component.element.setAttribute('data-props', JSON.stringify(propObject));
+                return;
+            }
+
+            // ignore deferred props, they change in the origin element
+            if (typeof propObject[propName] !== 'undefined') {
+                if (isDeferredPropType(propObject[propName])) {
+                    return;
+                }
+
+                propObject[propName] = this._valueMap[propName];
+                this._component.element.setAttribute('data-props', JSON.stringify(propObject));
+                return;
+            }
+        } catch (e) {
+            const words = attributeValue.split(',');
+
+            for (let i = 0; i < words.length; i++) {
+                words[i] = words[i].trim();
+                const matches = words[i].match(getPropParsingRegex());
+
+                if (matches !== null) {
+                    if (
+                        ((typeof matches[2] !== 'undefined' && componentName === matches[2]) || typeof matches[2] === 'undefined')
+                        && matches[3] === propName
+                        && typeof matches[4] === 'undefined'
+                    ) {
+                        words[i] = typeof matches[2] !== 'undefined'
+                            ? `${matches[2]}.${matches[3]}: ${JSON.stringify(this._valueMap[propName]).trim()}`
+                            : `${matches[3]}: ${JSON.stringify(this._valueMap[propName]).trim()}`;
+
+                        break;
+                    }
+                }
+            }
+
+            // Array.join is not enough to leave spaces after comas
+            let output = words[0].trim();
+            for (let i = 1; i < words.length; i++) {
+                output += ', ' + words[i].trim();
+            }
+
+            this._component.element.setAttribute('data-props', output);
+            return;
+        }
     }
 }

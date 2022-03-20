@@ -7,7 +7,9 @@ a Component. They include:
 instantiated (after all its property attributes have been parsed).
 - `onPropChanged(oldProps, newProps, propName)` - Called when the props in a 
 component are changed as a result of modifying the DOM or your JavaScript 
-program.
+program. When `oldProps` is `null`, it means that the prop has just been 
+initialized, either with the default value or by a value set up by us
+in the DOM element's `data-props` attribute.
 - `onDestroyed()` - Called when the DOM structure of a component has been
 removed from DOM and the component needs to clean up.
 

@@ -255,6 +255,30 @@ it('Can set the component props to one of 2 parent components props', () => {
     expect(parentComponent.props.counter).toBe(2);
 });
 
+it('Can set the component props to one of 2 parent components props with string syntax', () => {
+    JsFusion.registerComponent('basicComponent', ComponentRequiredPropType);
+    JsFusion.registerComponent('parentComponent', ComponentRequiredPropType);
+    JsFusion.registerComponent('childComponent', ComponentRequiredPropType);
+
+    document.body.innerHTML = `
+<div id="basicComponent" data-component="basicComponent parentComponent" data-props="basicComponent.counter: 5, parentComponent.counter: 4">
+    <div id="childComponent" data-component="childComponent" data-props="counter: #parentProp.parentComponent.counter"></div>
+</div>`;
+
+    JsFusion.start();
+
+    const basicComponent = JsFusion.componentRegistry[0].component;
+    const parentComponent = JsFusion.componentRegistry[1].component;
+    const childComponent = JsFusion.componentRegistry[2].component;
+
+    expect(childComponent.props.counter).toBe(4);
+
+    childComponent.props.counter = 2;
+
+    expect(basicComponent.props.counter).toBe(5);
+    expect(parentComponent.props.counter).toBe(2);
+});
+
 it('Errors when we set a deferred prop with a component with no parent', () => {
     JsFusion.registerComponent('parentComponent', ComponentRequiredPropType);
 
@@ -346,4 +370,108 @@ it('Errors when a prop is defined without component name and 2 components are de
     expect(() => {
         JsFusion.start();
     }).toThrow();
+});
+
+it('Changes the prop attribute when I change a prop from JavaScript', () => {
+    JsFusion.registerComponent('basicComponent', ComponentRequiredPropType);
+
+    document.body.innerHTML = `
+    <div id="basicComponent" data-component="basicComponent" data-props='{ "counter": 5 }'></div>`;
+
+    JsFusion.start();
+
+    const component = JsFusion.componentRegistry[0].component;
+    const element = document.getElementById('basicComponent');
+
+    component.props.counter = 6;
+
+    expect(JSON.parse(element.getAttribute('data-props'))).toStrictEqual({ counter: 6 });
+});
+
+it('Changes the prop attribute when I change a prop from JavaScript string syntax', () => {
+    JsFusion.registerComponent('basicComponent', ComponentRequiredPropType);
+
+    document.body.innerHTML = `
+    <div id="basicComponent" data-component="basicComponent" data-props="counter: 5"></div>`;
+
+    JsFusion.start();
+
+    const component = JsFusion.componentRegistry[0].component;
+    const element = document.getElementById('basicComponent');
+
+    component.props.counter = 6;
+
+    expect(element.getAttribute('data-props')).toBe('counter: 6');
+});
+
+it('Correctly changes the prop attribute when I change a prop from JavaScript in multiple component setup', () => {
+    JsFusion.registerComponent('basicComponent', ComponentRequiredPropType);
+    JsFusion.registerComponent('otherComponent', ComponentRequiredPropType);
+
+    document.body.innerHTML = `
+    <div id="basicComponent" data-component="basicComponent otherComponent" data-props='{ "basicComponent": { "counter": 5 }, "otherComponent": { "counter": 3 } }'></div>`;
+
+    JsFusion.start();
+
+    const component = JsFusion.componentRegistry[0].component;
+    const element = document.getElementById('basicComponent');
+
+    component.props.counter = 6;
+
+    expect(JSON.parse(element.getAttribute('data-props'))).toStrictEqual({ basicComponent: { counter: 6 }, otherComponent: { counter: 3 }});
+});
+
+it('Correctly changes the prop attribute when I change a prop from JavaScript in multiple component setup with string syntax', () => {
+    JsFusion.registerComponent('basicComponent', ComponentRequiredPropType);
+    JsFusion.registerComponent('otherComponent', ComponentRequiredPropType);
+
+    document.body.innerHTML = `
+    <div id="basicComponent" data-component="basicComponent otherComponent" data-props="basicComponent.counter: 5, otherComponent.counter: 3"></div>`;
+
+    JsFusion.start();
+
+    const component = JsFusion.componentRegistry[0].component;
+    const element = document.getElementById('basicComponent');
+
+    component.props.counter = 6;
+
+    expect(element.getAttribute('data-props')).toBe('basicComponent.counter: 6, otherComponent.counter: 3');
+});
+
+it('Correctly changes the prop of the top component attribute when a deferred prop is changed from JavaScript', () => {
+    JsFusion.registerComponent('basicComponent', ComponentRequiredPropType);
+    JsFusion.registerComponent('otherComponent', ComponentRequiredPropType);
+
+    document.body.innerHTML = `
+    <div id="basicComponent" data-component="basicComponent" data-props='{ "counter": 5 }'>
+        <div data-component="otherComponent" data-props='{ "counter": { "#parentProp" : "counter" } }'></div>
+    </div>`;
+
+    JsFusion.start();
+
+    const component = JsFusion.componentRegistry[1].component;
+    const element = document.getElementById('basicComponent');
+
+    component.props.counter = 6;
+
+    expect(JSON.parse(element.getAttribute('data-props'))).toStrictEqual({ counter: 6 });
+});
+
+it('Correctly changes the prop of the top component attribute when a deferred prop is changed from JavaScript, stirng syntax', () => {
+    JsFusion.registerComponent('basicComponent', ComponentRequiredPropType);
+    JsFusion.registerComponent('otherComponent', ComponentRequiredPropType);
+
+    document.body.innerHTML = `
+    <div id="basicComponent" data-component="basicComponent" data-props="counter: 5">
+        <div data-component="otherComponent" data-props="counter: #parentProp.counter"></div>
+    </div>`;
+
+    JsFusion.start();
+
+    const component = JsFusion.componentRegistry[1].component;
+    const element = document.getElementById('basicComponent');
+
+    component.props.counter = 6;
+
+    expect(element.getAttribute('data-props')).toBe('counter: 6');
 });

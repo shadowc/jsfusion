@@ -22,7 +22,6 @@ This section will be updated as development progresses.
 ### Missing features include:
 
 - Mutation Observer functionality.
-- Alternative syntax for props.
 - Plugin System for extensions (ability to parse new attributes and
   ability to react to new bind strategies).
 

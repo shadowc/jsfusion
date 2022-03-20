@@ -30,8 +30,9 @@ export class Component implements IComponent {
     private readonly _propTypes: IPropTypes;
     private readonly _refs: IRefCollection;
     private readonly _eventHandlers: EventHandlerCollection;
+    private readonly _componentName: string;
 
-    constructor(element: HTMLElement, componentRegistry: ComponentRegistry) {
+    constructor(element: HTMLElement, componentRegistry: ComponentRegistry, name: string) {
         this.componentRegistry = componentRegistry;
         this._element = element;
         this.props = new ComponentProps(this);
@@ -39,6 +40,7 @@ export class Component implements IComponent {
         this._refs = {};
         this._eventHandlers = [];
         this._propTypes = this.setPropTypes();
+        this._componentName = name;
 
         this.initializePropTypes();
     }
@@ -59,9 +61,13 @@ export class Component implements IComponent {
         return this._eventHandlers;
     }
 
+    get componentName() {
+        return this._componentName;
+    }
+
     setPropTypes() { return {}; }
     onCreated() {}
-    onPropChanged(oldProps: DOMComponentProps, newProps: DOMComponentProps, propName: string) {}
+    onPropChanged(oldProps: DOMComponentProps, newProps: DOMComponentProps|null, propName: string) {}
     onDestroyed() {}
 
     /**

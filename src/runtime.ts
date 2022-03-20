@@ -131,7 +131,7 @@ export class Runtime implements IRuntime {
 
         this.componentRegistry.push({
             name: componentName,
-            component: new componentClass(element, this.componentRegistry),
+            component: new componentClass(element, this.componentRegistry, componentName),
             node: element,
         });
 

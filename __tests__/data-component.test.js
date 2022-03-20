@@ -34,6 +34,8 @@ it('Can instantiate a basic component in html', () => {
             element: componentElement,
         },
     ], JsFusion);
+
+    expect(JsFusion.componentRegistry[0].component.componentName).toBe('basicComponent');
 });
 
 it('Errors when instantiating a component with bad data', () => {
