@@ -13,15 +13,15 @@ export class BindHandler extends AbstractHandler implements IAttributeHandler {
             Logger.log(`Attempting to bind for ${bindStrategy.strategyName} on "${bindStrategy.componentName}.${bindStrategy.propName}".`);
 
             // Find the correct strategy
-            if (typeof this.parent.dataBindHandlers.handlers[bindStrategy.strategyName] === 'undefined') {
+            if (typeof this.runtime.dataBindHandlers.handlers[bindStrategy.strategyName] === 'undefined') {
                 Logger.log(`Error trying to bind for strategy "${bindStrategy.strategyName}". No such strategy exists!`);
                 throw 'Invalid data-bind strategy.';
             }
 
-            const strategyHandler = this.parent.dataBindHandlers.handlers[bindStrategy.strategyName];
+            const strategyHandler = this.runtime.dataBindHandlers.handlers[bindStrategy.strategyName];
 
             // Find the right component
-            const component = getNearestComponent(element, bindStrategy.componentName, this.parent);
+            const component = getNearestComponent(element, bindStrategy.componentName, this.runtime);
 
             if (component === null) {
                 Logger.log(`Error trying to find component "${bindStrategy.componentName}" for data binding. Have you misspelled the component name?`);

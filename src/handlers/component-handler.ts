@@ -8,7 +8,7 @@ export class ComponentHandler extends AbstractHandler implements IAttributeHandl
         const componentNames = getComponentNamesFromParsedAttribute(parseAttribute(element, attribute));
 
         componentNames.forEach((component) => {
-            this.parent.registerComponentElement(component, element);
+            this.runtime.registerComponentElement(component, element);
         });
     }
 }

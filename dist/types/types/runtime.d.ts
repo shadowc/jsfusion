@@ -1,6 +1,7 @@
 import { IObservableAttributes } from './observable-attributes';
 import { IComponentClass, IComponent } from './component';
-import { IDataBindHandlerCollection } from './data-bind';
+import { IBindStrategyHandler, IDataBindHandlerCollection } from './data-bind';
+import { IAttributeHandler } from './attribute-handler';
 export declare type ComponentRegistry = Array<{
     name: string;
     component: IComponent;
@@ -22,4 +23,6 @@ export interface IRuntime {
     registerComponent: (componentName: string, component: IComponentClass) => void;
     registerComponentElement: (componentName: string, element: Element) => void;
     destroyComponentRegistry: (index: number) => void;
+    registerAttributeHandler: (attributeName: string, handler: IAttributeHandler) => void;
+    registerDataBindStrategy: (strategyName: string, handler: IBindStrategyHandler) => void;
 }

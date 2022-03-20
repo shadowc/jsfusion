@@ -9,21 +9,16 @@ strategies and features).
 
 ## Current version
 
-The current version is experimental and feature complete with a few
-exceptions (listed below). Usage in production environments should be
-heavily monitored as it's prone to have a few bugs. Feel free
-to experiment with it and suggest features, fixes and improvements on
-our [issues](https://github.com/shadowc/jsfusion/issues) page.
+The current version is experimental and feature complete except for the
+implementation of the `MutationObserver` system. The `MutationObserver` 
+feature is expected to be ready by `1.0.0-beta`. Usage in production 
+environments should be heavily monitored as it's prone to have a few bugs. 
+Feel free to experiment with it and suggest features, fixes and improvements 
+on our [issues](https://github.com/shadowc/jsfusion/issues) page.
 
 Bug fixing pull requests are also greatly appreciated!
 
 This section will be updated as development progresses.
-
-### Missing features include:
-
-- Mutation Observer functionality.
-- Plugin System for extensions (ability to parse new attributes and
-  ability to react to new bind strategies).
 
 ## Extensibility
 

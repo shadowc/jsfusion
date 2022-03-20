@@ -16,7 +16,7 @@ export class EventHandler extends AbstractHandler implements IAttributeHandler {
             Logger.log(`Attempting to bind event ${eventHandlerStrategy.eventName} on "${eventHandlerStrategy.componentName}.${eventHandlerStrategy.callbackName}".`);
 
             // Find the right component
-            const component = getNearestComponent(element, eventHandlerStrategy.componentName, this.parent);
+            const component = getNearestComponent(element, eventHandlerStrategy.componentName, this.runtime);
 
             if (component === null) {
                 Logger.log(`Error trying to find component "${eventHandlerStrategy.componentName}" for event handler binding. Have you misspelled the component name?`);
